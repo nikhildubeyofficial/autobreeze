@@ -1,0 +1,175 @@
+@media screen and (max-width: 400px) {
+  #features {
+    padding: 20px;
+    width: 111%;
+  }
+  #about,
+  #services,
+  #testimonials,
+  #team,
+  #contact,
+  #footer {
+    width: 111%;
+  }
+
+  #portfolio {
+    width: 110%;
+  }
+}
+@media (max-width: 560px) {
+  .fleet-btn label {
+    color: #fff;
+    padding-right: 15px;
+    padding-left: 20px;
+  }
+  
+}
+
+@media (max-width: 767px) {
+  #preselection {
+    max-width: 100%;
+  }
+
+}
+.form-control{
+  border-radius: 4px;
+}
+
+select {
+  -webkit-appearance: none;
+  -moz-appearance: none;
+  appearance: none;
+  padding: 10px;
+}
+/* Ensure flexbox behaves consistently */
+.nav-ul {
+  display: flex;
+  justify-content: space-evenly;
+  align-items: center;
+}
+
+.nav-link {
+  white-space: nowrap; /* Ensure the text does not break into multiple lines */
+  word-break: keep-all; /* Prevents breaking words */
+}
+.fw-bold {
+  font-weight: 700; /* Adjust as necessary for extra boldness */
+}
+.custom-bullets {
+  list-style-type: disc; /* or circle, square, etc. */
+  padding-left: 20px; /* Add padding for indentation */
+}
+
+.navbar-brand img {
+  max-height: 50px; /* Ensure consistent logo size */
+}
+
+.navbar-toggler {
+  border: none;
+}
+
+.offcanvas {
+  width: 300px; /* Adjust the offcanvas width for better layout */
+}
+
+/* Media query to ensure responsiveness */
+@media (max-width: 992px) {
+  .navbar-collapse {
+    text-align: center;
+  }
+
+  .nav-link {
+    display: block;
+    margin-bottom: 10px;
+  }
+}
+input {
+  -webkit-appearance: none; /* Vendor prefix for Safari */
+  appearance: none;
+}
+/* Container Styling */
+.booking-container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  background: linear-gradient(to bottom, #004d80, #005e99); /* Background */
+  padding: 20px;
+  color: white;
+  /* min-height: 100vh; */
+}
+
+h1 {
+  margin-bottom: 20px;
+}
+/* Rental Type Buttons */
+.rental-type {
+  display: flex;
+  gap: 10px;
+  margin-bottom: 20px;
+}
+
+.rental-type button {
+  background-color: transparent;
+  color: white;
+  border: 1px solid white;
+  padding: 10px;
+  cursor: pointer;
+  border-radius: 5px;
+}
+
+.rental-type button.active {
+  background-color: white;
+  color: #005e99;
+}
+
+/* Booking Form */
+.booking-form {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+  gap: 20px;
+  width: 100%;
+  max-width: 900px;
+  /* background-color: white; */
+  padding: 20px;
+  border-radius: 8px;
+  color: black;
+}
+
+.form-group {
+  display: flex;
+  flex-direction: column;
+}
+
+.form-group label {
+  margin-bottom: 8px;
+}
+
+.form-group input,
+.form-group select {
+  padding: 10px;
+  border: 1px solid #ccc;
+  border-radius: 5px;
+}
+
+/* Responsive Design */
+@media (max-width: 768px) {
+  .booking-form {
+    grid-template-columns: 1fr;
+  }
+}
+
+button[type="submit"] {
+  background-color: #005e99;
+  color: white;
+  padding: 10px;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+}
+
+button[type="submit"]:hover {
+  background-color: #004d80;
+}
+.title_lable{
+  color: white;
+}
