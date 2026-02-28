@@ -1,0 +1,16 @@
+# Place car images by brand in subfolders.
+# Fleet section will use these images (falls back to S3 if not found).
+# Example structure:
+#   static_images/bmw/second.png       (BMW X5)
+#   static_images/jeep/sahara.png      (Jeep Wrangler)
+#   static_images/jeep/gladitor.png    (Jeep Gladiator)
+#   static_images/mazda/cx30.png       (Mazda CX 30)
+#   static_images/mazda/cx5.png        (Mazda CX5)
+#   static_images/chevrolet/cheverolet.png (Chevrolet Trailblazer)
+#   static_images/nissan/patrol.png, trial.png, pathfinder.png
+#   static_images/renault/koleos.png
+#   static_images/honda/zrv.png
+#   static_images/infiniti/qx5.png
+#   static_images/cadillac/ct5.png
+#   static_images/mercedes/g63.png, s500.png, s580.png
+#   static_images/range-rover/p530.png, defender.png, p400.png

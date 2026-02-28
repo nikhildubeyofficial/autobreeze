@@ -10,6 +10,7 @@ import useCarApi from "../api/usecarapi.hook";
 import { Head } from "../components/head";
 import { useSelector } from "react-redux";
 import { carBack } from "../utility";
+import { getSpin360Url } from "../constants/carSpin360";
 const CardDetail = ({ faq, data }) => {
   const { slug } = useParams();
   const [carData, setcarData] = useState(data)
@@ -111,6 +112,16 @@ const CardDetail = ({ faq, data }) => {
                 className="w-100"
                 alt=""
               />
+              {getSpin360Url(carDetail) && (
+                <a
+                  href={getSpin360Url(carDetail)}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="btn btn-outline-primary mt-2"
+                >
+                  <span className="me-1">🔄</span> View 360° Spin
+                </a>
+              )}
             </div>
           </div>
           <div className="row pt-5">

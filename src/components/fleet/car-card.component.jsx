@@ -59,15 +59,22 @@
 // export default CarCardComponent;
 import React, { useState } from "react";
 import CarFeatures from "./car-feature";
+import { getSpin360Url } from "../../constants/carSpin360";
+import { getCarImageUrl, getCarImageFallbackUrl } from "../../utils/carImageUtils";
 
 const CarCardComponent = ({ carDetail, idindex, handleClickBook, bg = "" }) => {
-  console.log(carDetail?.capacity)
   const [price, setPrice] = useState(127);
   const [period, setPeriod] = useState("");
+  const [imgSrc, setImgSrc] = useState(getCarImageUrl(carDetail));
+  const spin360Url = getSpin360Url(carDetail);
 
   const handleClickBookPeriod = (price, period) => {
     setPrice(price);
     setPeriod(period);
+  };
+
+  const handleImgError = () => {
+    setImgSrc(getCarImageFallbackUrl(carDetail));
   };
 
   return (
@@ -78,11 +85,12 @@ const CarCardComponent = ({ carDetail, idindex, handleClickBook, bg = "" }) => {
       >
         <div className={` px-1 car-img-div position-relative`}>
           <img
-            src={`https://car-image-bucket-2024.s3.ap-south-1.amazonaws.com/car/${carDetail.img}`}
+            src={imgSrc || getCarImageFallbackUrl(carDetail)}
+            onError={handleImgError}
             className="card-img-top cursor-pointer image-car img-fluid"
             onClick={() => handleClickBook(carDetail?.car_id)}
-            alt="..."
-            style={{ objectFit: "contain", height: "200px", width: "100%" }} // Adjust height as needed
+            alt={carDetail?.title || "Car"}
+            style={{ objectFit: "contain", height: "200px", width: "100%" }}
           />
         </div>
         <div className={`card-body ${bg}`}>
@@ -206,6 +214,17 @@ const CarCardComponent = ({ carDetail, idindex, handleClickBook, bg = "" }) => {
               </h6>
             </div>
           </div>
+          {spin360Url && (
+            <a
+              href={spin360Url}
+              target="_blank"
+              rel="noopener noreferrer"
+              className="d-block text-center mb-2 text-theme text-decoration-none"
+              style={{ fontSize: "14px" }}
+            >
+              <span className="me-1">🔄</span> View 360° Spin
+            </a>
+          )}
           <CarFeatures />
           {/* <button
             className="btn-style btn bg-dark-blue w-50 border-0 text-white mb-2 py-3 fs-6 mt-3"
