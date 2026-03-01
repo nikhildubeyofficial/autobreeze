@@ -30,7 +30,7 @@ const TITLE_TO_STATIC_FOLDER = [
   ["renault koleos", "Renault Koleos"],
 ];
 
-// Default image per static_images folder (must exist in public/static_images)
+// Default image per static_images folder for fleet card (must exist in public/static_images)
 const STATIC_FOLDER_DEFAULT_IMAGE = {
   "BMW X5": "DSC_0038.jpg",
   "Cadillac": "DSC_0001.jpg",
@@ -49,6 +49,27 @@ const STATIC_FOLDER_DEFAULT_IMAGE = {
   "MG HS": "DSC_0040.jpg",
   "Nissan X-TRAIL": "IMG_6033.jpg",
   "Renault Koleos": "DSC_0001.jpg",
+};
+
+// Different images per folder for detail page: [section1, section2, key_feature]
+const STATIC_FOLDER_DETAIL_IMAGES = {
+  "BMW X5": ["DSC_0038.jpg", "DSC_0042.jpg", "DSC_0045.jpg"],
+  "Cadillac": ["DSC_0001.jpg", "DSC_0005.jpg", "DSC_0010.jpg"],
+  "Chevy Trailblazer": ["DSC_0019.jpg", "DSC_0024.jpg", "DSC_0029.jpg"],
+  "Ford Mustang": ["DSC_0020.jpg", "DSC_0026.jpg", "DSC_0030.jpg"],
+  "Genesis G70": ["_MG_1824.jpg", "_MG_1827.jpg", "_MG_1833.jpg"],
+  "Genesis G70 white": ["_MG_1841.jpg", "_MG_1846.jpg", "_MG_1850.jpg"],
+  "Honda HR-V": ["DSC_0035.jpg", "DSC_0040.jpg", "DSC_0045.jpg"],
+  "Infinity QX 50": ["IMG_6972.jpg", "IMG_6977.jpg", "IMG_6983.jpg"],
+  "Jeep": ["IMG_6947.jpg", "IMG_6952.jpg", "IMG_6958.jpg"],
+  "Jetour T2": ["IMG_6008.jpg", "IMG_6012.jpg", "IMG_6018.jpg"],
+  "Lexus IS 350": ["IMG_1682.jpg", "IMG_1686.jpg", "IMG_1692.jpg"],
+  "MAZDA CX30": ["IMG_6923.jpg", "IMG_6927.jpg", "IMG_6932.jpg"],
+  "Mazda CX-5": ["DSC_0026.jpg", "DSC_0030.jpg", "DSC_0034.jpg"],
+  "Mazda CX-30": ["DSC_0002.jpg", "DSC_0006.jpg", "DSC_0009.jpg"],
+  "MG HS": ["DSC_0040.jpg", "DSC_0045.jpg", "DSC_0050.jpg"],
+  "Nissan X-TRAIL": ["IMG_6033.jpg", "IMG_6038.jpg", "IMG_6042.jpg"],
+  "Renault Koleos": ["DSC_0001.jpg", "DSC_0005.jpg", "DSC_0007.jpg"],
 };
 
 // Map car_id to { folder, image } - folder names match static_images structure
@@ -80,14 +101,14 @@ function getFolderFromTitle(title) {
 const S3_CAR_BASE = "https://car-image-bucket-2024.s3.ap-south-1.amazonaws.com/car";
 
 export function getCarImageUrl(carDetail) {
-  if (!carDetail?.img) return "";
-  // 1. Use CAR_STATIC_IMAGE_MAP if car_id matches
+  if (!carDetail) return "";
+  // 1. Prefer static: CAR_STATIC_IMAGE_MAP by car_id
   const mapping = CAR_STATIC_IMAGE_MAP[carDetail.car_id];
   if (mapping) {
     const encodedFolder = encodeURIComponent(mapping.folder);
     return `/static_images/${encodedFolder}/${mapping.image}`;
   }
-  // 2. Use title -> folder + default image
+  // 2. Prefer static: title -> folder + default image
   const folder = getFolderFromTitle(carDetail.title);
   if (folder) {
     const image = STATIC_FOLDER_DEFAULT_IMAGE[folder];
@@ -96,8 +117,9 @@ export function getCarImageUrl(carDetail) {
       return `/static_images/${encodedFolder}/${image}`;
     }
   }
-  // 3. Fall back to S3
-  return `${S3_CAR_BASE}/${carDetail.img}`;
+  // 3. Fall back to S3 only when we have img
+  if (carDetail.img) return `${S3_CAR_BASE}/${carDetail.img}`;
+  return "";
 }
 
 export function getCarImageFallbackUrl(carDetail) {
@@ -105,16 +127,29 @@ export function getCarImageFallbackUrl(carDetail) {
   return `${S3_CAR_BASE}/${carDetail.img}`;
 }
 
+const DETAIL_SECTION_INDEX = { section1: 0, section2: 1, key_feature: 2 };
+
+/**
+ * Returns static image URL for a detail section when we have one for this car.
+ * section: 'section1' | 'section2' | 'key_feature' to get a different image per section.
+ */
+export function getDetailSectionPrimaryUrl(carDetail, section = "section1") {
+  return getDetailSectionStaticFallback(carDetail, section);
+}
+
 /**
  * Returns static fallback URL for detail page images (section1, section2, key_feature).
- * Used when S3 URL fails to load.
+ * Uses different images from the same brand folder per section when available.
  */
-export function getDetailSectionStaticFallback(carDetail) {
+export function getDetailSectionStaticFallback(carDetail, section = "section1") {
   if (!carDetail) return null;
   const mapping = CAR_STATIC_IMAGE_MAP[carDetail.car_id];
   const folder = mapping?.folder || getFolderFromTitle(carDetail.title);
-  const image = mapping?.image || (folder && STATIC_FOLDER_DEFAULT_IMAGE[folder]);
-  if (folder && image) {
+  if (!folder) return null;
+  const detailImages = STATIC_FOLDER_DETAIL_IMAGES[folder];
+  const index = DETAIL_SECTION_INDEX[section] ?? 0;
+  const image = detailImages?.[index] || (mapping?.image || STATIC_FOLDER_DEFAULT_IMAGE[folder]);
+  if (image) {
     const encodedFolder = encodeURIComponent(folder);
     return `/static_images/${encodedFolder}/${image}`;
   }

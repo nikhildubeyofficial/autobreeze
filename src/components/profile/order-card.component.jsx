@@ -1,16 +1,24 @@
-import React from 'react'
+import React, { useState, useEffect } from 'react'
 import { get24to12, getDateMonth, getDeliveryType } from '../../utility'
+import { getCarImageUrl, getCarImageFallbackUrl } from '../../utils/carImageUtils'
 
-const OrderCardComponent = ({orderDetail,bookedCar}) => {
-  debugger
+const OrderCardComponent = ({ orderDetail, bookedCar }) => {
+  const carDetailForImage = { car_id: bookedCar?.car_id, title: bookedCar?.car_title, img: bookedCar?.img || 'car.png' }
+  const [imgSrc, setImgSrc] = useState(() => getCarImageUrl(carDetailForImage))
+
+  useEffect(() => {
+    setImgSrc(getCarImageUrl(carDetailForImage))
+  }, [bookedCar?.car_id, bookedCar?.car_title, bookedCar?.img])
+
   return (
-    <div className="row car-card mb-2 align-items-center bg-white py-4 livecar-section" style={{borderRadius:"4px"}}>
+    <div className="row car-card mb-2 align-items-center bg-white py-4 livecar-section" style={{ borderRadius: "4px" }}>
     {/* Car Image Column */}
-    <div className="col  car-img text-center mb-4 mb-md-0">
+    <div className="col car-img text-center mb-4 mb-md-0">
       <img
-      style={{width:"211px",height:"108px"}}
-        src="./img/car/chevy.png"
-        alt="Mazda Cx5"
+        style={{ width: "211px", height: "108px", objectFit: "contain" }}
+        src={imgSrc || getCarImageFallbackUrl(carDetailForImage)}
+        onError={() => setImgSrc(getCarImageFallbackUrl(carDetailForImage))}
+        alt={bookedCar?.car_title || 'Car'}
       />
     </div>
     {/* Car Details Column */}
