@@ -26,10 +26,10 @@ const KeyFeatures = ({ id, keyFeatures, imagepath, fallbackImagepath, count }) =
               {keyFeatures?.map((item, index) => {
                 return (
                   <div
-                    className={`w-100 text-center rounded-1 py-2  mb-1 ${
+                    className={`w-100 text-center rounded-1 py-2 mb-1 keyfeature-item-transition ${
                       index === count ? "bg-theme text-white" : ""
                     }`}
-                    // style={styles}
+                    role="listitem"
                   >
                     {item}
                   </div>

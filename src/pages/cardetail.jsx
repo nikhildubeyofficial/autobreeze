@@ -132,14 +132,28 @@ const CardDetail = ({ faq, data }) => {
                   href={getSpin360Url(carDetail)}
                   target="_blank"
                   rel="noopener noreferrer"
-                  className="btn btn-outline-primary mt-2 d-inline-block"
+                  className="d-inline-flex align-items-center gap-2 mt-2 rounded text-decoration-none px-4 py-2"
                   style={{
                     fontWeight: 600,
-                    borderWidth: 2,
-                    padding: "8px 16px",
+                    border: "2px solid rgb(0, 181, 255)",
+                    color: "rgb(0, 181, 255)",
+                    backgroundColor: "transparent",
+                    transition: "background-color 0.2s, color 0.2s",
+                  }}
+                  onMouseOver={(e) => {
+                    e.currentTarget.style.backgroundColor = "rgb(0, 181, 255)";
+                    e.currentTarget.style.color = "#fff";
+                  }}
+                  onMouseOut={(e) => {
+                    e.currentTarget.style.backgroundColor = "transparent";
+                    e.currentTarget.style.color = "rgb(0, 181, 255)";
                   }}
                 >
-                  <span className="me-1">🔄</span> View 360° Spin
+                  <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">
+                    <path d="M21 12a9 9 0 11-9-9" />
+                    <path d="M21 3v6h-6" />
+                  </svg>
+                  View 360° Spin
                 </a>
               )}
             </div>

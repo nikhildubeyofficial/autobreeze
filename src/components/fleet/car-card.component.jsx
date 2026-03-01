@@ -231,19 +231,32 @@ const CarCardComponent = ({ carDetail, idindex, handleClickBook, bg = "" }) => {
               href={spin360Url}
               target="_blank"
               rel="noopener noreferrer"
-              className="d-block text-center mb-2 text-decoration-none py-2 px-2 rounded"
+              className="d-flex align-items-center justify-content-center gap-2 text-decoration-none rounded mb-2 py-2 px-3"
               style={{
                 fontSize: "14px",
                 fontWeight: 600,
                 color: "rgb(0, 181, 255)",
-                backgroundColor: "rgba(0, 181, 255, 0.1)",
-                border: "1px solid rgb(0, 181, 255)",
+                backgroundColor: "rgba(0, 181, 255, 0.08)",
+                border: "1px solid rgba(0, 181, 255, 0.4)",
                 whiteSpace: "nowrap",
                 overflow: "hidden",
                 textOverflow: "ellipsis",
+                transition: "background-color 0.2s, border-color 0.2s",
+              }}
+              onMouseOver={(e) => {
+                e.currentTarget.style.backgroundColor = "rgba(0, 181, 255, 0.15)";
+                e.currentTarget.style.borderColor = "rgb(0, 181, 255)";
+              }}
+              onMouseOut={(e) => {
+                e.currentTarget.style.backgroundColor = "rgba(0, 181, 255, 0.08)";
+                e.currentTarget.style.borderColor = "rgba(0, 181, 255, 0.4)";
               }}
             >
-              <span className="me-1">🔄</span> View 360° Spin
+              <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">
+                <path d="M21 12a9 9 0 11-9-9" />
+                <path d="M21 3v6h-6" />
+              </svg>
+              View 360° Spin
             </a>
           )}
           <CarFeatures />
