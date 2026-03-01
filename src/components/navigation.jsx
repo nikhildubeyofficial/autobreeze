@@ -200,8 +200,8 @@
 //   );
 // };
 
-import React, { useState } from "react";
-import { useNavigate } from "react-router-dom";
+import React, { useState, useEffect } from "react";
+import { useNavigate, useLocation } from "react-router-dom";
 import { OffCanvas } from "./common/sidecanvas.component";
 import { useDispatch, useSelector } from "react-redux";
 import { logoutUser } from "../redux/user/userslice";
@@ -209,7 +209,22 @@ import { logoutUser } from "../redux/user/userslice";
 export const Navigation = ({ page }) => {
   const isWhite = page === "detail";
   const [isOpen, setisOpen] = useState(false);
+  const [scrolled, setScrolled] = useState(false);
   const navigate = useNavigate();
+  const location = useLocation();
+
+  useEffect(() => {
+    const onScroll = () => setScrolled(window.scrollY > 50);
+    window.addEventListener("scroll", onScroll, { passive: true });
+    return () => window.removeEventListener("scroll", onScroll);
+  }, []);
+
+  useEffect(() => {
+    if (location.hash === "#explorecar") {
+      const el = document.getElementById("explorecar");
+      if (el) el.scrollIntoView({ behavior: "smooth", block: "start" });
+    }
+  }, [location.pathname, location.hash]);
   const dispatch=useDispatch()
   const user=useSelector(({user})=>user?.user)
   const userId = user?.user_id;
@@ -287,7 +302,16 @@ export const Navigation = ({ page }) => {
               </li>
               <li className="nav-item">
                 <a
-                  onClick={() => handleClickLink("explorecars")}
+                  href="#explorecar"
+                  onClick={(e) => {
+                    e.preventDefault();
+                    if (location.pathname === "/") {
+                      document.getElementById("explorecar")?.scrollIntoView({ behavior: "smooth", block: "start" });
+                      setisOpen(false);
+                    } else {
+                      navigate("/#explorecar");
+                    }
+                  }}
                   className={`nav-link active page-scroll cursor-pointer pointer-cursor ${
                     isWhite ? "text-theme" : "text-white"
                   }`}

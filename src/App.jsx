@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useRef } from "react";
 import { Navigation } from "./components/navigation";
 import { Header } from "./components/header";
 import { Features } from "./components/features";
@@ -17,7 +17,7 @@ import OurFleet from "./components/fleet";
 import Footer from "./components/footer";
 import Faq from "./components/faq";
 import WhyUs from "./components/whyus";
-import { BrowserRouter as Router, Routes, Route, Link } from "react-router-dom";
+import { BrowserRouter as Router, Routes, Route, Link, useLocation } from "react-router-dom";
 import CardDetail from "./pages/cardetail";
 import ExploreCars from "./pages/explorecars";
 import SignIn from "./pages/signin";
@@ -31,6 +31,7 @@ import { handleNotify } from "./components/common/notification/toaster_notify.co
 import Checkout from "./pages/checkout";
 import TermsAndUse from "./pages/termsuse";
 import { carBack } from "./utility";
+import BookNowModal from "./components/common/book-now-modal.component";
 // import CarRentalBooking from "./components/CarRentalBooking";
 
 export const scroll = new SmoothScroll('a[href*="#"]', {
@@ -40,6 +41,7 @@ export const scroll = new SmoothScroll('a[href*="#"]', {
 
 const App = () => {
   const [landingPageData, setLandingPageData] = useState({});
+  const [showHeroBookModal, setShowHeroBookModal] = useState(false);
   const cars=useSelector(({car})=>car?.cars)
   const bookData=useSelector(({car})=>car?.bookinfo)
   const dispatch=useDispatch()
@@ -69,10 +71,11 @@ const App = () => {
         element={
           <>
             <Navigation />
-            <Header data={landingPageData.Header} />
+            <Header data={landingPageData.Header} onBookNowClick={() => setShowHeroBookModal(true)} />
             <Brand />
             <RentalBooking carData={cars} rentalBookData={bookData} />
             <OurFleet data={cars} />
+            <BookNowModal show={showHeroBookModal} onClose={() => setShowHeroBookModal(false)} allCars={cars || []} />
             {/* <Features data={landingPageData.Features} /> */}
             {/* <About data={landingPageData.About} /> */}
             {/* <Services data={landingPageData.Services} /> */}

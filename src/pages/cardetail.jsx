@@ -12,6 +12,9 @@ import { useSelector } from "react-redux";
 import { carBack } from "../utility";
 import { getSpin360Url } from "../constants/carSpin360";
 import { getDetailSectionStaticFallback, getDetailSectionPrimaryUrl } from "../utils/carImageUtils";
+import Spin360Viewer from "../components/common/spin360-viewer.component";
+import BookNowModal from "../components/common/book-now-modal.component";
+
 const CardDetail = ({ faq, data }) => {
   const { slug } = useParams();
   const [carData, setcarData] = useState(data)
@@ -65,6 +68,8 @@ const CardDetail = ({ faq, data }) => {
   const [keyFeatureSrc, setKeyFeatureSrc] = useState(null)
   const [keyFeatureActiveCount, setkeyFeatureActiveCount] = useState(0)
   const [keyFeatures, setkeyFeatures] = useState([])
+  const [show360, setShow360] = useState(false)
+  const [showBookModal, setShowBookModal] = useState(false)
   useEffect(() => {
     let intervalId = setInterval(()=>{
       if(count <2){
@@ -111,13 +116,38 @@ const CardDetail = ({ faq, data }) => {
     <div>
       <Navigation page="detail"/>
       <Breadcrumb name={carDetail?.title} />
-      {/* <div className="section">
-        <div className="image w-100">
-          <img src={`./img/detailimage${1}.png`} className="w-100" alt="" />
-        </div>
-      </div> */}
       <Head/>
+      {/* PDF-style price summary: car name + Daily/Weekly/Monthly + Book Now */}
+      <div className="detail-price-summary bg-theme-dark py-4">
+        <div className="container">
+          <div className="row align-items-center">
+            <div className="col-12 col-md-4 mb-3 mb-md-0">
+              <h1 className="text-theme fw-semibold mb-0 text-capitalize detail-price-summary-title">{carDetail?.title}</h1>
+            </div>
+            <div className="col-12 col-md-5 mb-3 mb-md-0">
+              <div className="car-fleet-price-row justify-content-md-start">
+                <div className="car-fleet-price-item" style={{ maxWidth: "120px" }}>
+                  <span className="car-fleet-price-label">Daily</span>
+                  <span className="car-fleet-price-value">{carDetail?.daily_price}</span>
+                </div>
+                <div className="car-fleet-price-item" style={{ maxWidth: "120px" }}>
+                  <span className="car-fleet-price-label">Weekly</span>
+                  <span className="car-fleet-price-value">{carDetail?.weekly_price}</span>
+                </div>
+                <div className="car-fleet-price-item" style={{ maxWidth: "120px" }}>
+                  <span className="car-fleet-price-label">Monthly</span>
+                  <span className="car-fleet-price-value">{carDetail?.monthly_price}</span>
+                </div>
+              </div>
+            </div>
+            <div className="col-12 col-md-3 text-md-end">
+              <button type="button" className="btn btn-book-fleet px-4" onClick={() => setShowBookModal(true)}>Book Now</button>
+            </div>
+          </div>
+        </div>
+      </div>
       <RentalBooking section="detail" name={carDetail?.title}  carData={carData} page={"detail"} rentalBookData={rentalBookData}/>
+      <BookNowModal show={showBookModal} onClose={() => setShowBookModal(false)} carDetail={carDetail} allCars={data || []} />
       <div className="detail-section">
         <div className="container py-5">
           <div className="row">
@@ -138,33 +168,37 @@ const CardDetail = ({ faq, data }) => {
                 style={{ objectFit: "contain", maxHeight: 400 }}
               />
               {getSpin360Url(carDetail) && (
-                <a
-                  href={getSpin360Url(carDetail)}
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className="d-inline-flex align-items-center gap-2 mt-2 rounded text-decoration-none px-4 py-2"
-                  style={{
-                    fontWeight: 600,
-                    border: "2px solid rgb(0, 181, 255)",
-                    color: "rgb(0, 181, 255)",
-                    backgroundColor: "transparent",
-                    transition: "background-color 0.2s, color 0.2s",
-                  }}
-                  onMouseOver={(e) => {
-                    e.currentTarget.style.backgroundColor = "rgb(0, 181, 255)";
-                    e.currentTarget.style.color = "#fff";
-                  }}
-                  onMouseOut={(e) => {
-                    e.currentTarget.style.backgroundColor = "transparent";
-                    e.currentTarget.style.color = "rgb(0, 181, 255)";
-                  }}
-                >
-                  <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">
-                    <path d="M21 12a9 9 0 11-9-9" />
-                    <path d="M21 3v6h-6" />
-                  </svg>
-                  View 360° Spin
-                </a>
+                <>
+                  <button
+                    type="button"
+                    onClick={() => setShow360(true)}
+                    className="d-inline-flex align-items-center gap-2 mt-2 rounded px-4 py-2 border-0"
+                    style={{
+                      fontWeight: 600,
+                      border: "2px solid rgb(0, 181, 255)",
+                      color: "rgb(0, 181, 255)",
+                      backgroundColor: "transparent",
+                      transition: "background-color 0.2s, color 0.2s",
+                      cursor: "pointer",
+                    }}
+                    onMouseOver={(e) => {
+                      e.currentTarget.style.backgroundColor = "rgb(0, 181, 255)";
+                      e.currentTarget.style.color = "#fff";
+                    }}
+                    onMouseOut={(e) => {
+                      e.currentTarget.style.backgroundColor = "transparent";
+                      e.currentTarget.style.color = "rgb(0, 181, 255)";
+                    }}
+                  >
+                    View 360° Spin
+                  </button>
+                  <Spin360Viewer
+                    show={show360}
+                    onClose={() => setShow360(false)}
+                    iframeUrl={getSpin360Url(carDetail)}
+                    carTitle={carDetail?.title}
+                  />
+                </>
               )}
             </div>
           </div>

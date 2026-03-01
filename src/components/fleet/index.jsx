@@ -3,7 +3,6 @@ import CarCardComponent from "./car-card.component";
 import { useNavigate } from "react-router-dom";
 
 const OurFleet = ({ data }) => {
-  console.log(data)
   const [Category, setCategory] = useState("all");
   const intialData=data?.filter(item=>item.category===Category)
   const [carData, setcarData] = useState(intialData);
@@ -32,7 +31,7 @@ const OurFleet = ({ data }) => {
   return (
     <div className="bg-theme-dark fleet-btn" id="explorecar">
       <div className="container">
-        <h1 className="text-center py-5 text-theme fw-semibold">Our Fleet</h1>
+        <h1 className="text-center py-5 text-theme fw-semibold fleet-section-title">Catalogue</h1>
         {/* <div className="brand-type d-flex justify-content-center pb-3"> */}
         <div className="brand-type d-flex justify-content-center pb-3">
           <div className="btn-group d-block fleet" role="group">
@@ -65,14 +64,14 @@ const OurFleet = ({ data }) => {
             const count=isDiplayMore?carData.length:4;
             if((index<count)){
 
-              return <CarCardComponent carDetail={car} idindex={index} handleClickBook={handleClickBook}/>
+              return <CarCardComponent carDetail={car} idindex={index} handleClickBook={handleClickBook} allCars={data} />
             }
           })}
         </div>
         <div className="row">
           <div className="col-12 text-center mt-4">
-            <button className="btn btn-outline-dark fw-lighter fs-3 view-all-btn" onClick={()=>setisDiplayMore(!isDiplayMore)}>
-              {!isDiplayMore?"View all":"Hide More"}
+            <button className="btn btn-outline-dark btn-load-more" onClick={()=>setisDiplayMore(!isDiplayMore)}>
+              {!isDiplayMore ? "Load more" : "Show less"}
             </button>
           </div>
         </div>

@@ -118,7 +118,7 @@ const RentalBooking = ({ section, name, data, carData, page, rentalBookData }) =
   return (
     <div className="bg-dark-blue rental-book-section pb-4">
       {section !== "detail" && (
-        <h1 className="text-center py-2 text-white pt-5">Book Now</h1>
+        <h1 className="text-center py-2 text-white pt-5 rental-section-title">Reserve car</h1>
       )}
       <div className="container pt-3">
         {name && (
@@ -161,7 +161,7 @@ const RentalBooking = ({ section, name, data, carData, page, rentalBookData }) =
           <form onSubmit={handleSubmit}>
             <div style={styles.bookNowForm}>
               <div style={styles.formGroup}>
-                <label htmlFor="pickupDate">From</label>
+                <label htmlFor="pickupDate">Rent from</label>
                 <input
                   type="date"
                   id="pickupDate"
@@ -172,7 +172,7 @@ const RentalBooking = ({ section, name, data, carData, page, rentalBookData }) =
               </div>
 
               <div style={styles.formGroup}>
-                <label htmlFor="dropOffDate">To</label>
+                <label htmlFor="dropOffDate">Rent to</label>
                 <input
                   type="date"
                   id="dropOffDate"
@@ -183,7 +183,7 @@ const RentalBooking = ({ section, name, data, carData, page, rentalBookData }) =
               </div>
 
               <div style={styles.formGroup}>
-                <label htmlFor="pickupTime">Pickup Time</label>
+                <label htmlFor="pickupTime">Pickup time</label>
                 {/* <input
                   type="time"
                   id="pickupTime"
@@ -193,7 +193,7 @@ const RentalBooking = ({ section, name, data, carData, page, rentalBookData }) =
                 /> */}
                 <select
                   id="pickupTime"
-                  value={dropOffTime}
+                  value={pickupTime}
                   onChange={(e) => setPickupTime(e.target.value)}
                   style={styles.input}
                 >
@@ -207,7 +207,7 @@ const RentalBooking = ({ section, name, data, carData, page, rentalBookData }) =
               </div>
 
               <div style={styles.formGroup}>
-                <label htmlFor="dropOffTime">Drop Off Time</label>
+                <label htmlFor="dropOffTime">Drop off time</label>
                 <select
                   id="dropOffTime"
                   value={dropOffTime}
@@ -226,7 +226,7 @@ const RentalBooking = ({ section, name, data, carData, page, rentalBookData }) =
 
             <div style={styles.bookNowForm}>
               <div style={styles.formGroup}>
-                <label htmlFor="selectCar">Select Car</label>
+                <label htmlFor="selectCar">Choose car</label>
                 <select
                   id="selectCar"
                   value={selectedCar}

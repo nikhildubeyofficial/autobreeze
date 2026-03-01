@@ -1,52 +1,36 @@
 import React from "react";
+import { Link } from "react-router-dom";
 
 const Footer = () => {
+  const linkStyle = { color: "grey" };
   return (
-    <footer className="bg-theme-dark text-white py-4">
-      
+    <footer className="footer-enhance bg-theme-dark text-white py-4">
       <div className="container">
         <div className="row">
-          {/* Left Side: Logo and Text */}
           <div className="col-md-6">
-            <img
-              src="./img/logoblack.png"
-              alt="Logo"
-              className="mb-5  footer-img"
-              style={{ height: 50 }}
-            />
-            <div>
-              {/* <p className="mb-4 mb-md-0" style={{ color: "grey" }}>
-                The Autobreeze fleet is strictly non-smoking. <br />
-                Renters and their passengers are not permitted to
-                <br />
-                smoke in any Autobreeze car.
-              </p> */}
-            </div>
-            <div></div>
+            <Link to="/" className="d-inline-block">
+              <img
+                src="./img/logoblack.png"
+                alt="Logo"
+                className="mb-5 footer-img"
+                style={{ height: 50 }}
+              />
+            </Link>
           </div>
-          {/* Right Side: Social Media, Contact, and Sitemap */}
-          <div className=" col-md-4">
+          <div className="col-md-4">
             <div className="row">
-              <div className="col-4 offset-md-0  col-md-5 offset-0  px-3 mb-4">
+              <div className="col-4 offset-md-0 col-md-5 offset-0 px-3 mb-4">
                 <h6 className="text-theme">Info</h6>
                 <ul className="list-unstyled">
                   <li>
-                    <a
-                      href="#"
-                      className="text-decoration-none d-block mb-2"
-                      style={{ color: "grey" }}
-                    >
+                    <Link to="/aboutus" className="text-decoration-none d-block mb-2" style={linkStyle}>
                       About Us
-                    </a>
+                    </Link>
                   </li>
                   <li>
-                    <a
-                      href="#"
-                      className="text-decoration-none d-block mb-2"
-                      style={{ color: "grey" }}
-                    >
+                    <Link to="/termsofuse" className="text-decoration-none d-block mb-2" style={linkStyle}>
                       Terms of Use
-                    </a>
+                    </Link>
                   </li>
                   {/* <li>
                 <a href="#" className="text-decoration-none d-block mb-2" style={{color: 'grey'}}>Policies</a>
@@ -84,21 +68,13 @@ const Footer = () => {
                 <h6 className="text-theme">Contact Us</h6>
                 <ul className="list-unstyled">
                   <li>
-                    <a
-                      href="#"
-                      className="text-decoration-none d-block mb-2"
-                      style={{ color: "grey" }}
-                    >
+                    <a href="mailto:info@autobreezecarrental.com" className="text-decoration-none d-block mb-2" style={linkStyle}>
                       info@autobreezecarrental.com
                     </a>
                   </li>
                   <li>
-                    <a
-                      href="#"
-                      className="text-decoration-none d-block mb-2"
-                      style={{ color: "grey" }}
-                    >
-                      +971&nbsp;2467&nbsp;24786
+                    <a href="tel:+971246724786" className="text-decoration-none d-block mb-2" style={linkStyle}>
+                      +971 2467 24786
                     </a>
                   </li>
                   <li>

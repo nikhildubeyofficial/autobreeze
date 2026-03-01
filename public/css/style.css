@@ -916,6 +916,28 @@ background-image: linear-gradient(to right bottom, #052d3d, #03364a, #023f57, #0
   padding-left: 120px;
   padding-right: 120px;
 }
+/* Royal Dream–style section titles and Load more */
+.fleet-section-title {
+  font-size: 2rem;
+  letter-spacing: 0.02em;
+  font-weight: 600;
+}
+.btn-load-more {
+  padding: 0.6rem 2.5rem;
+  font-weight: 500;
+  border-radius: 6px;
+  transition: background-color 0.2s ease, color 0.2s ease;
+}
+.btn-load-more:hover {
+  background-color: var(--dark-blue);
+  color: #fff;
+  border-color: var(--dark-blue);
+}
+.rental-section-title {
+  font-size: 1.75rem;
+  font-weight: 600;
+  letter-spacing: 0.02em;
+}
 .car-fleet-card{
   box-shadow: rgba(0, 0, 0, 0.2) 0px 4px 8px;
   border-radius: 6px;
@@ -925,6 +947,65 @@ background-image: linear-gradient(to right bottom, #052d3d, #03364a, #023f57, #0
 .car-fleet-card:hover {
   box-shadow: rgba(0, 81, 115, 0.15) 0 8px 20px, rgba(0, 0, 0, 0.1) 0 4px 12px;
   transform: translateY(-2px);
+}
+
+/* PDF-reference fleet card: image, name, Daily/Weekly/Monthly, Book Now */
+.car-fleet-card-pdf .car-fleet-card-img {
+  aspect-ratio: 16/10;
+  height: auto !important;
+  min-height: 160px;
+  background-color: #1a1a1a;
+  cursor: pointer;
+}
+.car-fleet-card-pdf .car-fleet-card-title {
+  font-size: 1.1rem;
+  text-align: center;
+  margin-bottom: 0.5rem;
+}
+.car-fleet-price-row {
+  display: flex;
+  justify-content: space-between;
+  gap: 8px;
+  margin-bottom: 0.75rem;
+}
+.car-fleet-price-item {
+  flex: 1;
+  text-align: center;
+  padding: 10px 6px;
+  border: 1px solid rgba(0, 81, 115, 0.35);
+  border-radius: 6px;
+  background: rgba(0, 81, 115, 0.04);
+}
+.car-fleet-price-label {
+  display: block;
+  font-size: 0.75rem;
+  color: #666;
+  text-transform: capitalize;
+}
+.car-fleet-price-value {
+  display: block;
+  font-size: 0.95rem;
+  font-weight: 600;
+  color: var(--dark-blue);
+}
+.btn-book-fleet {
+  background: linear-gradient(90deg, rgb(0, 106, 150) 0%, rgb(0, 84, 118) 100%);
+  color: #fff !important;
+  border: 0;
+  font-weight: 600;
+  padding: 10px 16px;
+  border-radius: 6px;
+  transition: opacity 0.2s ease;
+}
+.btn-book-fleet:hover {
+  color: #fff;
+  opacity: 0.95;
+}
+.car-fleet-about-btn {
+  font-size: 0.9rem;
+}
+.car-fleet-expanded {
+  border-color: rgba(0, 0, 0, 0.08) !important;
 }
 .profile-detail-section input{
   border-color: #414141;
@@ -996,7 +1077,7 @@ margin-bottom: 0px !important;
 .car-fleet .image-car,
 .car-fleet img.card-img-top {
   object-fit: cover !important;
-  object-position: center;
+  object-position: center 40%;
 }
 .mt-52{
   margin-top: 52px !important;
@@ -1252,6 +1333,20 @@ a:focus-visible {
 }
 .detail-section p.text-secondary {
   line-height: 1.6;
+}
+/* PDF-style detail price summary bar */
+.detail-price-summary {
+  background-color: var(--theme-gray, #f6f6f6) !important;
+  border-bottom: 1px solid rgba(0, 0, 0, 0.08);
+}
+.detail-price-summary-title {
+  font-size: 1.5rem;
+}
+/* Footer UX: clickable links hover */
+.footer-enhance a[href]:hover,
+.footer-enhance a[style*="grey"]:hover,
+.footer-enhance .text-decoration-none:hover {
+  color: var(--dark-blue) !important;
 }
 /* Key features list transition */
 .keyfeature-item-transition {
