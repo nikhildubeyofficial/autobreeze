@@ -11,6 +11,7 @@ import { Head } from "../components/head";
 import { useSelector } from "react-redux";
 import { carBack } from "../utility";
 import { getSpin360Url } from "../constants/carSpin360";
+import { getDetailSectionStaticFallback } from "../utils/carImageUtils";
 const CardDetail = ({ faq, data }) => {
   const { slug } = useParams();
   const [carData, setcarData] = useState(data)
@@ -37,12 +38,25 @@ const CardDetail = ({ faq, data }) => {
     if(bookInfo){
       setrentalBookData(bookInfo)
     }
-    
+
   }, [data,bookInfo])
+
+  useEffect(() => {
+    if (carDetail?.car_id) {
+      const s3Base = "https://car-image-bucket-2024.s3.ap-south-1.amazonaws.com/cardetails"
+      const isLocal = carDetail.car_id === 24
+      setSection1Src(isLocal ? `./img/cardetails/carid${id}/section1_images.png` : `${s3Base}/carid${carDetail.car_id}/section1_images.png`)
+      setSection2Src(isLocal ? `./img/cardetails/carid${id}/section2_images.png` : `${s3Base}/carid${carDetail.car_id}/section2_images.png`)
+      setKeyFeatureSrc(isLocal ? `./img/cardetails/carid${id}/key_feature_img.png` : `${s3Base}/carid${carDetail.car_id}/key_feature_img.png`)
+    }
+  }, [carDetail?.car_id, id])
   
 
   const [imageName, setimageName] = useState("")
   const [count, setcount] = useState(0)
+  const [section1Src, setSection1Src] = useState(null)
+  const [section2Src, setSection2Src] = useState(null)
+  const [keyFeatureSrc, setKeyFeatureSrc] = useState(null)
   const [keyFeatureActiveCount, setkeyFeatureActiveCount] = useState(0)
   const [keyFeatures, setkeyFeatures] = useState([])
   useEffect(() => {
@@ -107,17 +121,23 @@ const CardDetail = ({ faq, data }) => {
             </div>
             <div className="col-12 col-md-6 col-lg-6 ">
               <img
-              src={carDetail?.car_id !== 24?`https://car-image-bucket-2024.s3.ap-south-1.amazonaws.com/cardetails/carid${carDetail?.car_id}/section1_images.png`:`./img/cardetails/carid${id}/section1_images.png`}
-                // src={`./img/cardetails/carid${id}/section1_images.png`}
+                src={section1Src || (carDetail?.car_id !== 24 ? `https://car-image-bucket-2024.s3.ap-south-1.amazonaws.com/cardetails/carid${carDetail?.car_id}/section1_images.png` : `./img/cardetails/carid${id}/section1_images.png`)}
+                onError={() => { const fallback = getDetailSectionStaticFallback(carDetail); if (fallback) setSection1Src(fallback); }}
                 className="w-100"
-                alt=""
+                alt={carDetail?.section1_title || "Car"}
+                style={{ objectFit: "contain", maxHeight: 400 }}
               />
               {getSpin360Url(carDetail) && (
                 <a
                   href={getSpin360Url(carDetail)}
                   target="_blank"
                   rel="noopener noreferrer"
-                  className="btn btn-outline-primary mt-2"
+                  className="btn btn-outline-primary mt-2 d-inline-block"
+                  style={{
+                    fontWeight: 600,
+                    borderWidth: 2,
+                    padding: "8px 16px",
+                  }}
                 >
                   <span className="me-1">🔄</span> View 360° Spin
                 </a>
@@ -127,10 +147,11 @@ const CardDetail = ({ faq, data }) => {
           <div className="row pt-5">
             <div className="col-12 col-md-6 col-lg-6 px-2  p-md-5">
               <img
-                src={carDetail?.car_id !== 24?`https://car-image-bucket-2024.s3.ap-south-1.amazonaws.com/cardetails/carid${carDetail?.car_id}/section2_images.png`:`./img/cardetails/carid${id}/section2_images.png`}
-                // src={`./img/cardetails/carid${id}/section2_images.png`}
+                src={section2Src || (carDetail?.car_id !== 24 ? `https://car-image-bucket-2024.s3.ap-south-1.amazonaws.com/cardetails/carid${carDetail?.car_id}/section2_images.png` : `./img/cardetails/carid${id}/section2_images.png`)}
+                onError={() => { const fallback = getDetailSectionStaticFallback(carDetail); if (fallback) setSection2Src(fallback); }}
                 className="w-100"
-                alt=""
+                alt={carDetail?.section2_title || "Car"}
+                style={{ objectFit: "contain", maxHeight: 400 }}
               />
             </div>
             <div className="col-12 col-md-6 pt-5">
@@ -144,8 +165,8 @@ const CardDetail = ({ faq, data }) => {
         keyFeatures={keyFeatures}
         id={id}
         count={keyFeatureActiveCount}
-        imagepath={carDetail?.car_id !== 24?`https://car-image-bucket-2024.s3.ap-south-1.amazonaws.com/cardetails/carid${carDetail?.car_id}/key_feature_img.png`:`./img/cardetails/carid${id}/key_feature_img.png`}
-        // imagepath={`./img/cardetails/carid${id}/key_feature_img.png`}
+        imagepath={keyFeatureSrc || (carDetail?.car_id !== 24 ? `https://car-image-bucket-2024.s3.ap-south-1.amazonaws.com/cardetails/carid${carDetail?.car_id}/key_feature_img.png` : `./img/cardetails/carid${id}/key_feature_img.png`)}
+        fallbackImagepath={getDetailSectionStaticFallback(carDetail)}
       />
       <Faq data={faq} />
       <Footer />

@@ -83,14 +83,26 @@ const CarCardComponent = ({ carDetail, idindex, handleClickBook, bg = "" }) => {
         className={`card w-100 bg-theme-dark border-0 ${bg} car-fleet-card`}
         style={{ minHeight: "330px" }}
       >
-        <div className={` px-1 car-img-div position-relative`}>
+        <div
+          className="px-1 car-img-div position-relative overflow-hidden"
+          style={{ backgroundColor: "#1a1a1a" }}
+        >
           <img
             src={imgSrc || getCarImageFallbackUrl(carDetail)}
             onError={handleImgError}
             className="card-img-top cursor-pointer image-car img-fluid"
             onClick={() => handleClickBook(carDetail?.car_id)}
             alt={carDetail?.title || "Car"}
-            style={{ objectFit: "contain", height: "200px", width: "100%" }}
+            style={{
+              objectFit: "cover",
+              objectPosition: "center",
+              width: "100%",
+              height: "100%",
+              position: "absolute",
+              top: 0,
+              left: 0,
+              display: "block",
+            }}
           />
         </div>
         <div className={`card-body ${bg}`}>
@@ -219,8 +231,17 @@ const CarCardComponent = ({ carDetail, idindex, handleClickBook, bg = "" }) => {
               href={spin360Url}
               target="_blank"
               rel="noopener noreferrer"
-              className="d-block text-center mb-2 text-theme text-decoration-none"
-              style={{ fontSize: "14px" }}
+              className="d-block text-center mb-2 text-decoration-none py-2 px-2 rounded"
+              style={{
+                fontSize: "14px",
+                fontWeight: 600,
+                color: "rgb(0, 181, 255)",
+                backgroundColor: "rgba(0, 181, 255, 0.1)",
+                border: "1px solid rgb(0, 181, 255)",
+                whiteSpace: "nowrap",
+                overflow: "hidden",
+                textOverflow: "ellipsis",
+              }}
             >
               <span className="me-1">🔄</span> View 360° Spin
             </a>
