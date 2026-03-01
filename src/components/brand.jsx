@@ -37,8 +37,8 @@ const Brand = () => {
       repeatType: 'loop', // Go back and forth
     }}
     > */}
-      <div className="bg-theme-dark w-100  pt-5 pb-5">
-        <div className="px-4">
+      <div className="bg-theme-dark w-100 section-block pt-5 pb-5">
+        <div className="container-responsive px-4">
           <div className="row parent">
             {/* <Carousel responsive={responsive} infinite={true} autoPlay={true} co autoPlaySpeed={100} arrows={false} transitionDuration={0.5} > */}
             <Marquee speed={80}>

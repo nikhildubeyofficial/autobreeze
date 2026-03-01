@@ -41,8 +41,9 @@ const BookNowModal = ({ show, onClose, carDetail = null, allCars = [] }) => {
   useEffect(() => {
     if (show) {
       document.body.style.overflow = "hidden";
-      if (carDetail) {
-        setSelectedCarId(carDetail.car_id || "");
+      if (carDetail != null) {
+        const id = carDetail.car_id ?? carDetail.id;
+        setSelectedCarId(id != null ? String(id) : "");
       }
     } else {
       document.body.style.overflow = "";
@@ -52,7 +53,10 @@ const BookNowModal = ({ show, onClose, carDetail = null, allCars = [] }) => {
     };
   }, [show, carDetail]);
 
-  const carTitle = carDetail?.title || (allCars?.find((c) => (c.car_id || c.id) === selectedCarId)?.title) || "";
+  const carTitle =
+    carDetail?.title ||
+    (allCars?.find((c) => String(c.car_id ?? c.id) === String(selectedCarId))?.title) ||
+    "";
 
   const generateTimeSlots = () => {
     const times = [];
@@ -137,11 +141,14 @@ const BookNowModal = ({ show, onClose, carDetail = null, allCars = [] }) => {
                   onChange={(e) => setSelectedCarId(e.target.value)}
                 >
                   <option value="">Select car</option>
-                  {allCars?.map((car) => (
-                    <option key={car.car_id || car.id} value={car.car_id || car.id}>
-                      {car.title}
-                    </option>
-                  ))}
+                  {allCars?.map((car) => {
+                    const carId = car.car_id ?? car.id;
+                    return (
+                      <option key={carId} value={carId != null ? String(carId) : ""}>
+                        {car.title}
+                      </option>
+                    );
+                  })}
                 </select>
               </div>
               <div className="row g-2 mb-3">

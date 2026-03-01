@@ -116,11 +116,11 @@ const RentalBooking = ({ section, name, data, carData, page, rentalBookData }) =
 
   const timeSlots = generateTimeSlots();
   return (
-    <div className="bg-dark-blue rental-book-section pb-4">
+    <section className="bg-dark-blue rental-book-section section-block pb-4">
       {section !== "detail" && (
         <h1 className="text-center py-2 text-white pt-5 rental-section-title">Reserve car</h1>
       )}
-      <div className="container pt-3">
+      <div className="container container-responsive pt-3">
         {name && (
           <h1 className="text-start py-2 fw-semibold text-white pt-3">
             {name}
@@ -312,7 +312,7 @@ const RentalBooking = ({ section, name, data, carData, page, rentalBookData }) =
           </form>
         </div>
       </div>
-    </div>
+    </section>
   );
 };
 

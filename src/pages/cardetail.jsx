@@ -119,7 +119,7 @@ const CardDetail = ({ faq, data }) => {
       <Head/>
       {/* PDF-style price summary: car name + Daily/Weekly/Monthly + Book Now */}
       <div className="detail-price-summary bg-theme-dark py-4">
-        <div className="container">
+        <div className="container container-responsive">
           <div className="row align-items-center">
             <div className="col-12 col-md-4 mb-3 mb-md-0">
               <h1 className="text-theme fw-semibold mb-0 text-capitalize detail-price-summary-title">{carDetail?.title}</h1>
@@ -149,7 +149,7 @@ const CardDetail = ({ faq, data }) => {
       <RentalBooking section="detail" name={carDetail?.title}  carData={carData} page={"detail"} rentalBookData={rentalBookData}/>
       <BookNowModal show={showBookModal} onClose={() => setShowBookModal(false)} carDetail={carDetail} allCars={data || []} />
       <div className="detail-section">
-        <div className="container py-5">
+        <div className="container container-responsive py-5">
           <div className="row">
             <div className="col-12 col-md-6">
               <h1 className="text-theme pe-5">{carDetail?.section1_title}</h1>

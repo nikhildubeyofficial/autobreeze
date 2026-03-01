@@ -4,17 +4,22 @@ import { useNavigate } from "react-router-dom";
 
 const OurFleet = ({ data }) => {
   const [Category, setCategory] = useState("all");
-  const intialData=data?.filter(item=>item.category===Category)
-  const [carData, setcarData] = useState(intialData);
-  const [isDiplayMore, setisDiplayMore] = useState(false)
+  const [carData, setcarData] = useState(data || []);
+  const [isDiplayMore, setisDiplayMore] = useState(false);
+
   useEffect(() => {
-    if(Category !== "all"){
-      setcarData(data?.filter(item=>item.category===Category))
-    }else{
-      setcarData(data)
+    if (!data || !Array.isArray(data)) return;
+    const normalized = (val) => String(val || "").toLowerCase().trim();
+    if (Category === "all") {
+      setcarData(data);
+    } else {
+      setcarData(data.filter((item) => normalized(item.category) === normalized(Category)));
     }
-    
-  }, [Category,data])
+  }, [Category, data]);
+
+  useEffect(() => {
+    setisDiplayMore(false);
+  }, [Category]);
   
   const navigate = useNavigate();
 
@@ -29,9 +34,9 @@ const OurFleet = ({ data }) => {
   };
 
   return (
-    <div className="bg-theme-dark fleet-btn" id="explorecar">
-      <div className="container">
-        <h1 className="text-center py-5 text-theme fw-semibold fleet-section-title">Catalogue</h1>
+    <section className="section-block section-fleet bg-theme-dark fleet-btn" id="explorecar">
+      <div className="container container-responsive">
+        <h1 className="text-center py-5 text-theme fw-semibold fleet-section-title">Our Fleet</h1>
         {/* <div className="brand-type d-flex justify-content-center pb-3"> */}
         <div className="brand-type d-flex justify-content-center pb-3">
           <div className="btn-group d-block fleet" role="group">
@@ -76,7 +81,7 @@ const OurFleet = ({ data }) => {
           </div>
         </div>
       </div>
-    </div>
+    </section>
   );
 };
 

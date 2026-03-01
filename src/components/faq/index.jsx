@@ -5,11 +5,11 @@ import { faq } from "../../utility";
 const Faq = ({ data }) => {
 
   return (
-    <div className="bg-theme-dark pb-5 pb-5">
+    <section className="bg-theme-dark section-block pb-5">
       <div>
-        <h1 className="text-center text-theme">FAQ's</h1>
+        <h1 className="text-center text-theme section-title-heading">FAQ's</h1>
       </div>
-      <div className="container mt-4 bg-theme-dark">
+      <div className="container container-responsive mt-4 bg-theme-dark">
         <div className="accordion bg-theme-dark" id="accordionExample">
           {faq?.map((item, index) => {
             return (
@@ -76,7 +76,7 @@ const Faq = ({ data }) => {
           </div>
         </div>
       </div>
-    </div>
+    </section>
   );
 };
 

@@ -2,10 +2,10 @@ import React from "react";
 
 const WhyUs = () => {
   return (
-    <div className="bg-theme-dark pt-5 pb-5 " id="whyus">
-      <div className="container">
+    <section className="bg-theme-dark section-block" id="whyus">
+      <div className="container container-responsive">
         <div>
-          <h1 className="text-center text-theme fs-1 pb-3 ">Why Us?</h1>
+          <h1 className="text-center text-theme fs-1 pb-3 section-title-heading">Why Us?</h1>
         </div>
         <div className=" mt-4">
           <div className="row">
@@ -83,7 +83,7 @@ const WhyUs = () => {
           </div>
         </div>
       </div>
-    </div>
+    </section>
   );
 };
 

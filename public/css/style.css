@@ -3,24 +3,45 @@
 
 /* background-image: linear-gradient(to right bottom, #4a003f, #5d004f, #710060, #850071, #9a0083); */
 :root {
-  /* --main-dark: #000000; */
-  --text-theme:#000000;
+  --text-theme: #1a1a1a;
   --main-dark: #fff;
-  /* --dark-blue: #006791; */
   --dark-blue: #005173;
-  --bg-light-white:#FFFFFF;
-  --theme-gray:#F6F6F6
+  --dark-blue-hover: #003d52;
+  --accent: #00b5ff;
+  --bg-light-white: #ffffff;
+  --theme-gray: #f6f6f6;
+  --radius-sm: 8px;
+  --radius-md: 12px;
+  --radius-lg: 16px;
+  --shadow-sm: 0 2px 8px rgba(0, 0, 0, 0.06);
+  --shadow-md: 0 4px 16px rgba(0, 0, 0, 0.08);
+  --shadow-lg: 0 8px 32px rgba(0, 0, 0, 0.1);
+  --section-padding: clamp(2.5rem, 5vw, 4rem);
+  --container-max: 1200px;
 }
 body,
 html {
-  font-family: "Open Sans", sans-serif;
+  font-family: "Open Sans", -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
   text-rendering: optimizeLegibility !important;
   -webkit-font-smoothing: antialiased !important;
-  color: #777;
+  color: #555;
   font-weight: 400;
   width: 100% !important;
+  max-width: 100vw;
+  overflow-x: hidden;
   height: 100% !important;
   scroll-behavior: smooth !important;
+}
+.container-responsive {
+  max-width: var(--container-max);
+  margin-left: auto;
+  margin-right: auto;
+  padding-left: clamp(1rem, 4vw, 1.5rem);
+  padding-right: clamp(1rem, 4vw, 1.5rem);
+}
+.section-block {
+  padding-top: var(--section-padding);
+  padding-bottom: var(--section-padding);
 }
 h2,
 h3,
@@ -874,10 +895,22 @@ label {
 .card-body {
   padding: 1.25rem 1.5rem;
 }
-.fleet-btn label {
-  color: #fff;
-  padding-right: 40px;
-  padding-left: 40px;
+.section-fleet {
+  background: linear-gradient(180deg, var(--theme-gray) 0%, var(--main-dark) 100%);
+}
+.section-fleet .fleet-btn label,
+.fleet-btn .category-btn {
+  color: var(--text-theme) !important;
+  padding: 0.5rem 1.25rem;
+  border-radius: var(--radius-md);
+  transition: background 0.2s ease, color 0.2s ease;
+  min-height: 44px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+}
+.section-fleet .category-btn.active {
+  color: #fff !important;
 }
 
 .fleet-btn text-theme ive {
@@ -916,37 +949,51 @@ background-image: linear-gradient(to right bottom, #052d3d, #03364a, #023f57, #0
   padding-left: 120px;
   padding-right: 120px;
 }
-/* Royal Dream–style section titles and Load more */
+/* Section titles – Our Fleet & Reserve car */
 .fleet-section-title {
-  font-size: 2rem;
+  font-size: clamp(1.75rem, 4vw, 2.25rem);
   letter-spacing: 0.02em;
   font-weight: 600;
+  margin-bottom: 0.25rem;
+}
+.section-fleet .fleet-section-title::after {
+  content: "";
+  display: block;
+  width: 48px;
+  height: 4px;
+  background: linear-gradient(90deg, var(--dark-blue), var(--accent));
+  margin: 0.75rem auto 0;
+  border-radius: 2px;
 }
 .btn-load-more {
-  padding: 0.6rem 2.5rem;
+  padding: 0.65rem 2.25rem;
   font-weight: 500;
-  border-radius: 6px;
-  transition: background-color 0.2s ease, color 0.2s ease;
+  border-radius: var(--radius-md);
+  transition: background-color 0.2s ease, color 0.2s ease, transform 0.15s ease;
+  min-height: 44px;
 }
 .btn-load-more:hover {
   background-color: var(--dark-blue);
-  color: #fff;
+  color: #fff !important;
   border-color: var(--dark-blue);
+  transform: translateY(-1px);
 }
 .rental-section-title {
-  font-size: 1.75rem;
+  font-size: clamp(1.5rem, 3.5vw, 1.75rem);
   font-weight: 600;
   letter-spacing: 0.02em;
 }
-.car-fleet-card{
-  box-shadow: rgba(0, 0, 0, 0.2) 0px 4px 8px;
-  border-radius: 6px;
-  margin-bottom: 8px;
-  transition: box-shadow 0.25s ease, transform 0.25s ease;
+.car-fleet-card {
+  box-shadow: var(--shadow-md);
+  border-radius: var(--radius-md);
+  margin-bottom: 1.5rem;
+  transition: box-shadow 0.3s ease, transform 0.3s ease;
+  overflow: hidden;
+  border: 1px solid rgba(0, 0, 0, 0.06);
 }
 .car-fleet-card:hover {
-  box-shadow: rgba(0, 81, 115, 0.15) 0 8px 20px, rgba(0, 0, 0, 0.1) 0 4px 12px;
-  transform: translateY(-2px);
+  box-shadow: var(--shadow-lg), 0 0 0 1px rgba(0, 81, 115, 0.1);
+  transform: translateY(-4px);
 }
 
 /* PDF-reference fleet card: image, name, Daily/Weekly/Monthly, Book Now */
@@ -971,35 +1018,45 @@ background-image: linear-gradient(to right bottom, #052d3d, #03364a, #023f57, #0
 .car-fleet-price-item {
   flex: 1;
   text-align: center;
-  padding: 10px 6px;
-  border: 1px solid rgba(0, 81, 115, 0.35);
-  border-radius: 6px;
+  padding: 0.65rem 0.4rem;
+  border: 1px solid rgba(0, 81, 115, 0.2);
+  border-radius: var(--radius-sm);
   background: rgba(0, 81, 115, 0.04);
+  transition: background 0.2s ease, border-color 0.2s ease;
+}
+.car-fleet-price-item:hover {
+  background: rgba(0, 81, 115, 0.08);
+  border-color: rgba(0, 81, 115, 0.35);
 }
 .car-fleet-price-label {
   display: block;
-  font-size: 0.75rem;
+  font-size: 0.7rem;
   color: #666;
   text-transform: capitalize;
+  letter-spacing: 0.02em;
 }
 .car-fleet-price-value {
   display: block;
-  font-size: 0.95rem;
+  font-size: clamp(0.85rem, 2vw, 0.95rem);
   font-weight: 600;
   color: var(--dark-blue);
 }
 .btn-book-fleet {
-  background: linear-gradient(90deg, rgb(0, 106, 150) 0%, rgb(0, 84, 118) 100%);
+  background: linear-gradient(135deg, var(--dark-blue) 0%, var(--dark-blue-hover) 100%);
   color: #fff !important;
   border: 0;
   font-weight: 600;
-  padding: 10px 16px;
-  border-radius: 6px;
-  transition: opacity 0.2s ease;
+  padding: 0.75rem 1rem;
+  border-radius: var(--radius-sm);
+  transition: opacity 0.2s ease, transform 0.15s ease, box-shadow 0.2s ease;
+  min-height: 44px;
+  box-shadow: 0 2px 8px rgba(0, 81, 115, 0.25);
 }
 .btn-book-fleet:hover {
   color: #fff;
   opacity: 0.95;
+  transform: translateY(-1px);
+  box-shadow: 0 4px 12px rgba(0, 81, 115, 0.3);
 }
 .car-fleet-about-btn {
   font-size: 0.9rem;
@@ -1368,5 +1425,227 @@ a.btn[style*="dark-blue"]:hover {
     flex-direction: column;
     justify-content: center;
     align-items: center;
+  }
+}
+
+/* ========== Responsive & creative design (all pages) ========== */
+/* Hero: responsive height and text */
+.hero-bg {
+  min-height: 60vh;
+}
+@media (min-width: 768px) {
+  .hero-bg {
+    min-height: 75vh;
+  }
+}
+.h1-text-intro {
+  font-size: clamp(1.75rem, 5vw, 2.5rem) !important;
+}
+.h2-text-intro {
+  font-size: clamp(1.25rem, 3.5vw, 1.75rem) !important;
+}
+.intro .btn-style501 {
+  padding: 0.75rem 1.5rem;
+  font-size: 1rem;
+  border-radius: var(--radius-sm);
+  min-height: 44px;
+}
+@media (max-width: 576px) {
+  .intro .container .row {
+    text-align: center;
+  }
+  .intro .text-start {
+    text-align: center !important;
+  }
+}
+
+/* Nav: responsive padding and collapse */
+#menu {
+  padding-top: 0.75rem;
+  padding-bottom: 0.75rem;
+}
+@media (min-width: 992px) {
+  #menu {
+    padding-top: 1rem;
+    padding-bottom: 1rem;
+  }
+}
+.navbar-nav .nav-link {
+  padding: 0.5rem 0.75rem;
+}
+@media (max-width: 991px) {
+  .navbar-collapse {
+    padding: 1rem 0;
+  }
+  .navbar-nav {
+    gap: 0.25rem;
+  }
+}
+
+/* Booking / Reserve section */
+.rental-book-section {
+  padding: var(--section-padding) 0;
+}
+.rental-book-section .container {
+  max-width: var(--container-max);
+  margin-left: auto;
+  margin-right: auto;
+  padding-left: clamp(1rem, 4vw, 1.5rem);
+  padding-right: clamp(1rem, 4vw, 1.5rem);
+}
+.rental-book-section label {
+  font-weight: 500;
+  margin-bottom: 0.25rem;
+}
+.rental-book-section input,
+.rental-book-section select {
+  border-radius: var(--radius-sm);
+  min-height: 44px;
+}
+@media (max-width: 768px) {
+  .rental-book-section .bookNowForm,
+  .rental-book-section [style*="bookNowForm"] {
+    flex-direction: column;
+  }
+  .rental-book-section .formGroup,
+  .rental-book-section [style*="formGroup"] {
+    min-width: 100%;
+  }
+}
+
+/* Detail page: section block and responsive */
+.detail-section {
+  padding-top: var(--section-padding);
+  padding-bottom: var(--section-padding);
+}
+.detail-section .container {
+  max-width: var(--container-max);
+  padding-left: clamp(1rem, 4vw, 1.5rem);
+  padding-right: clamp(1rem, 4vw, 1.5rem);
+}
+.detail-price-summary .container {
+  max-width: var(--container-max);
+  padding-left: clamp(1rem, 4vw, 1.5rem);
+  padding-right: clamp(1rem, 4vw, 1.5rem);
+}
+.detail-price-summary-title {
+  font-size: clamp(1.25rem, 3vw, 1.5rem);
+}
+@media (max-width: 768px) {
+  .detail-price-summary .row {
+    text-align: center;
+  }
+  .detail-price-summary .text-md-end {
+    text-align: center !important;
+  }
+  .detail-price-summary .car-fleet-price-row {
+    justify-content: center;
+  }
+}
+.detail-section img {
+  max-width: 100%;
+  height: auto;
+}
+
+/* Fleet grid: responsive columns */
+.section-fleet .row {
+  margin-left: -0.5rem;
+  margin-right: -0.5rem;
+}
+.section-fleet .car-fleet {
+  padding-left: 0.5rem;
+  padding-right: 0.5rem;
+  margin-bottom: 1rem;
+}
+@media (max-width: 767px) {
+  .section-fleet .car-fleet {
+    flex: 0 0 100%;
+    max-width: 100%;
+  }
+}
+@media (min-width: 768px) and (max-width: 991px) {
+  .section-fleet .car-fleet {
+    flex: 0 0 50%;
+    max-width: 50%;
+  }
+}
+@media (min-width: 992px) {
+  .section-fleet .car-fleet {
+    flex: 0 0 33.333333%;
+    max-width: 33.333333%;
+  }
+}
+
+/* Why Us & FAQ: consistent section block */
+#whyus,
+.whyus-section {
+  padding-top: var(--section-padding);
+  padding-bottom: var(--section-padding);
+}
+#whyus .container,
+.whyus-section .container {
+  max-width: var(--container-max);
+  padding-left: clamp(1rem, 4vw, 1.5rem);
+  padding-right: clamp(1rem, 4vw, 1.5rem);
+}
+.section-title-heading {
+  font-size: clamp(1.5rem, 4vw, 2rem);
+  font-weight: 600;
+  letter-spacing: 0.02em;
+}
+
+/* Footer: responsive and spacing */
+.footer-enhance .container {
+  max-width: var(--container-max);
+  padding-left: clamp(1rem, 4vw, 1.5rem);
+  padding-right: clamp(1rem, 4vw, 1.5rem);
+}
+@media (max-width: 768px) {
+  .footer-enhance .row {
+    text-align: center;
+  }
+  .footer-enhance .social-icon {
+    justify-content: center !important;
+  }
+  .footer-enhance .mb-5 {
+    margin-bottom: 1.5rem !important;
+  }
+}
+
+/* Modal and form polish */
+.modal-content {
+  border-radius: var(--radius-md);
+  box-shadow: var(--shadow-lg);
+  border: none;
+}
+.modal-header {
+  border-bottom: 1px solid rgba(0, 0, 0, 0.08);
+  padding: 1rem 1.25rem;
+}
+.modal-body {
+  padding: 1.25rem;
+}
+.modal-footer {
+  border-top: 1px solid rgba(0, 0, 0, 0.08);
+  padding: 1rem 1.25rem;
+}
+.form-control,
+.form-select {
+  border-radius: var(--radius-sm);
+}
+.btn-primary {
+  background: linear-gradient(135deg, var(--dark-blue), var(--dark-blue-hover));
+  border: none;
+  border-radius: var(--radius-sm);
+}
+
+/* Breadcrumb and detail page header */
+.breadcrumb {
+  padding-left: clamp(1rem, 4vw, 1.5rem);
+  padding-right: clamp(1rem, 4vw, 1.5rem);
+}
+@media (max-width: 576px) {
+  .breadcrumb {
+    margin-top: 5rem;
   }
 }
