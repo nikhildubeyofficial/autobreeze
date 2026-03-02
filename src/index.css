@@ -1,13 +1,166 @@
+@import url('https://fonts.googleapis.com/css2?family=Montserrat:wght@300;400;500;600;700;800&family=Playfair+Display:wght@400;500;600;700&display=swap');
+
+:root {
+  --luxury-gold: #C6A75E;
+  --luxury-gold-hover: #D4B66B;
+  --bg-dark: #0a0a0a;
+  --bg-gradient: linear-gradient(135deg, #0d0d0d 0%, #1a1a1a 100%);
+}
+
 body {
   margin: 0;
-  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen',
-    'Ubuntu', 'Cantarell', 'Fira Sans', 'Droid Sans', 'Helvetica Neue',
-    sans-serif;
+  font-family: 'Montserrat', sans-serif;
+  background: var(--bg-gradient) !important;
+  color: #ffffff;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
+}
+
+h1,
+h2,
+h3,
+h4,
+h5,
+.playfair {
+  font-family: 'Playfair Display', serif;
 }
 
 code {
   font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New',
     monospace;
+}
+
+/* Base Premium Animations */
+@keyframes fadeUp {
+  0% {
+    opacity: 0;
+    transform: translateY(40px);
+  }
+
+  100% {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+html {
+  scroll-behavior: smooth;
+}
+
+/* Premium Car Cards - Minimal Luxury */
+.car-fleet-card {
+  border-radius: 4px !important;
+  overflow: hidden;
+  transition: all 0.4s ease;
+  background: #111111 !important;
+  border: 1px solid rgba(198, 167, 94, 0.1) !important;
+  /* subtle gold border */
+}
+
+.car-fleet-card:hover {
+  transform: translateY(-8px);
+  box-shadow: 0 15px 35px rgba(0, 0, 0, 0.8), 0 0 15px rgba(198, 167, 94, 0.15);
+  border-color: rgba(198, 167, 94, 0.4) !important;
+}
+
+.car-fleet-card-img {
+  height: 220px;
+  background: transparent;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 10px;
+}
+
+.image-car {
+  transition: transform 0.6s ease;
+  width: 100%;
+  height: 100%;
+  object-fit: contain !important;
+  /* to show the clean side profile transparently */
+}
+
+.car-fleet-card:hover .image-car {
+  transform: scale(1.08);
+}
+
+.car-fleet-card-title {
+  font-family: 'Playfair Display', serif;
+  font-size: 1.4rem;
+  letter-spacing: 0.5px;
+  color: #ffffff !important;
+}
+
+.car-fleet-price-row {
+  display: flex !important;
+  justify-content: space-between;
+  margin: 15px 0;
+  padding: 12px;
+  background: rgba(255, 255, 255, 0.03);
+  border-radius: 8px;
+  border: 1px solid rgba(255, 255, 255, 0.05);
+}
+
+.car-fleet-price-item {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.car-fleet-price-label {
+  font-size: 0.75rem;
+  color: #94a3b8;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+  margin-bottom: 4px;
+}
+
+.car-fleet-price-value {
+  font-weight: 700;
+  color: #00b5ff;
+  font-size: 0.95rem;
+}
+
+.car-price-luxury {
+  font-family: 'Montserrat', sans-serif;
+  color: var(--luxury-gold);
+  font-size: 1.1rem;
+  font-weight: 500;
+  margin-top: 8px;
+}
+
+.btn-luxury {
+  background: transparent !important;
+  color: var(--luxury-gold) !important;
+  border: 1px solid var(--luxury-gold) !important;
+  border-radius: 0 !important;
+  /* sharp luxury edges */
+  font-weight: 500 !important;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+  padding: 10px 20px !important;
+  transition: all 0.3s ease !important;
+}
+
+.btn-luxury:hover {
+  background: var(--luxury-gold) !important;
+  color: #000 !important;
+  box-shadow: 0 4px 15px rgba(198, 167, 94, 0.4) !important;
+}
+
+.btn-book-fleet {
+  background: linear-gradient(90deg, #00b5ff, #0077ff) !important;
+  color: white !important;
+  border: none !important;
+  border-radius: 8px !important;
+  font-weight: 600 !important;
+  letter-spacing: 0.5px;
+  transition: all 0.3s ease !important;
+  box-shadow: 0 4px 15px rgba(0, 181, 255, 0.3) !important;
+}
+
+.btn-book-fleet:hover {
+  background: linear-gradient(90deg, #00c6ff, #0088ff) !important;
+  transform: scale(1.02);
+  box-shadow: 0 6px 20px rgba(0, 181, 255, 0.5) !important;
 }

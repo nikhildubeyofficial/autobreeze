@@ -225,8 +225,8 @@ export const Navigation = ({ page }) => {
       if (el) el.scrollIntoView({ behavior: "smooth", block: "start" });
     }
   }, [location.pathname, location.hash]);
-  const dispatch=useDispatch()
-  const user=useSelector(({user})=>user?.user)
+  const dispatch = useDispatch()
+  const user = useSelector(({ user }) => user?.user)
   const userId = user?.user_id;
   // Toggles the offcanvas visibility
   const handleClickToggle = () => {
@@ -239,7 +239,7 @@ export const Navigation = ({ page }) => {
     navigate(`/${path}`);
   };
 
-  const handleClickLogout=()=>{
+  const handleClickLogout = () => {
     dispatch(logoutUser())
     navigate('/signin')
   }
@@ -247,9 +247,7 @@ export const Navigation = ({ page }) => {
   return (
     <>
       <nav
-        className={`navbar navbar-expand-lg navbar-default fixed-top py-4 ${
-          isWhite ? "bg-white" : ""
-        }`}
+        className={`navbar navbar-expand-lg navbar-dark fixed-top py-4 bg-dark`}
         id="menu"
       >
         <div className="container-fluid d-flex justify-content-between align-items-center">
@@ -259,7 +257,7 @@ export const Navigation = ({ page }) => {
             onClick={() => navigate("/")}
           >
             <img
-              src={`./img/${isWhite ? "logoblue.png" : "logo.png"}`}
+              src={`./img/logo.png`}
               alt="Logo"
               height={50}
             />
@@ -267,7 +265,7 @@ export const Navigation = ({ page }) => {
 
           {/* Mobile Toggle Button */}
           <button
-            className={`navbar-toggler ${isWhite ? "navbar-light" : "navbar-dark"}`}
+            className={`navbar-toggler navbar-dark`}
             type="button"
             onClick={handleClickToggle}
           >
@@ -283,18 +281,14 @@ export const Navigation = ({ page }) => {
               <li className="nav-item">
                 <a
                   onClick={() => handleClickLink("aboutus")}
-                  className={`nav-link active page-scroll pointer-cursor pointer-cursor ${
-                    isWhite ? "text-theme" : "text-white"
-                  }`}
+                  className={`nav-link active page-scroll pointer-cursor pointer-cursor text-white`}
                 >
                   About Us
                 </a>
               </li>
               <li className="nav-item  pointer-cursor">
                 <a
-                  className={`nav-link active ${
-                    isWhite ? "text-theme" : "text-white"
-                  }`}
+                  className={`nav-link active text-white`}
                   onClick={() => handleClickLink("termsofuse")}
                 >
                   Terms of Use
@@ -312,14 +306,12 @@ export const Navigation = ({ page }) => {
                       navigate("/#explorecar");
                     }
                   }}
-                  className={`nav-link active page-scroll cursor-pointer pointer-cursor ${
-                    isWhite ? "text-theme" : "text-white"
-                  }`}
+                  className={`nav-link active page-scroll cursor-pointer pointer-cursor text-white`}
                 >
                   Explore Cars
                 </a>
               </li>
-                      {/* {(userId&&userId>0) && 
+              {/* {(userId&&userId>0) && 
                         <li className="nav-item">
                 <a
                   onClick={() => handleClickLink("profile")}
@@ -336,44 +328,40 @@ export const Navigation = ({ page }) => {
 
           {/* Right side: Sign In button */}
           <div className="navbar-text text-end d-none d-lg-block">
-              {(userId&&userId>0) ? 
-            // <button
-            // // style={{visibility:"hidden"}}
-            //   type="button"
-            //   className={`btn v-hidden ${
-            //     isWhite ? "btn-outline-dark" : "btn-outline-light"
-            //   }`}
-            //   onClick={handleClickLogout}
-            // >
-            //   Logout
-            // </button>
-      <div className="dropdown">
-  <button 
-    className={`btn v-hidden dropdown-toggle ${
-                isWhite ? "btn-outline-dark" : "btn-outline-light"
-              }`}
-   type="button" data-bs-toggle="dropdown" aria-expanded="false">
-    {user?.firstName ||"User"}
-  </button>
-  <ul className="dropdown-menu">
-    <li><button className="dropdown-item" type="button" onClick={() => handleClickLink("profile")}>Profile</button></li>
-    <li><button className="dropdown-item" type="button" onClick={handleClickLogout}>Logout</button></li>
-    {/* <li><button className="dropdown-item" type="button">Another action</button></li> */}
-    {/* <li><button className="dropdown-item" type="button">Something else here</button></li> */}
-  </ul>
-</div>
+            {(userId && userId > 0) ?
+              // <button
+              // // style={{visibility:"hidden"}}
+              //   type="button"
+              //   className={`btn v-hidden ${
+              //     isWhite ? "btn-outline-dark" : "btn-outline-light"
+              //   }`}
+              //   onClick={handleClickLogout}
+              // >
+              //   Logout
+              // </button>
+              <div className="dropdown">
+                <button
+                  className={`btn v-hidden dropdown-toggle btn-outline-light`}
+                  type="button" data-bs-toggle="dropdown" aria-expanded="false">
+                  {user?.firstName || "User"}
+                </button>
+                <ul className="dropdown-menu">
+                  <li><button className="dropdown-item" type="button" onClick={() => handleClickLink("profile")}>Profile</button></li>
+                  <li><button className="dropdown-item" type="button" onClick={handleClickLogout}>Logout</button></li>
+                  {/* <li><button className="dropdown-item" type="button">Another action</button></li> */}
+                  {/* <li><button className="dropdown-item" type="button">Something else here</button></li> */}
+                </ul>
+              </div>
 
-           : <button
-            // style={{visibility:"hidden"}}
-              type="button"
-              className={`btn v-hidden ${
-                isWhite ? "btn-outline-dark" : "btn-outline-light"
-              }`}
-              onClick={() => handleClickLink("signin")}
-            >
-              Sign In
-            </button>
-}
+              : <button
+                // style={{visibility:"hidden"}}
+                type="button"
+                className={`btn v-hidden btn-outline-light`}
+                onClick={() => handleClickLink("signin")}
+              >
+                Sign In
+              </button>
+            }
           </div>
         </div>
       </nav>

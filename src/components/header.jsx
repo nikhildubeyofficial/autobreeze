@@ -12,9 +12,9 @@ export const Header = (props) => {
   }, []);
   return (
     <header id="header">
-      {count === 0 && <ChildHeader count="0" carText="Affordable" onBookNowClick={props.onBookNowClick} data={props.data} />}
-      {count === 1 && <ChildHeader count="1" carText="Reliable" onBookNowClick={props.onBookNowClick} data={props.data} />}
-      {count === 2 && <ChildHeader count="2" carText="Flexible" onBookNowClick={props.onBookNowClick} data={props.data} />}
+      {count === 0 && <ChildHeader count="3" carText="Affordable" onBookNowClick={props.onBookNowClick} data={props.data} />}
+      {count === 1 && <ChildHeader count="4" carText="Reliable" onBookNowClick={props.onBookNowClick} data={props.data} />}
+      {count === 2 && <ChildHeader count="5" carText="Flexible" onBookNowClick={props.onBookNowClick} data={props.data} />}
     </header>
   );
 };
@@ -24,7 +24,7 @@ const ChildHeader = (props) => {
       <div
         className="hero-bg"
         style={{
-          background: `url(../img/landing/landing${props.count}.png) center center no-repeat`,
+          background: `url(../img/landing/landing${props.count}.${props.count >= 3 ? 'jpg' : 'png'}) center center no-repeat`,
           backgroundSize: "cover",
           backgroundPosition: "center",
           width: "100vw",
@@ -44,7 +44,7 @@ const ChildHeader = (props) => {
               left: 0,
               right: 0,
               bottom: 0,
-              backgroundColor: "rgba(0, 0, 0, 0.55)",
+              background: "linear-gradient(to right, rgba(0,0,0,0.9), rgba(0,0,0,0.4))",
               zIndex: 1,
               width: "100%",
               height: "100%",
@@ -53,38 +53,27 @@ const ChildHeader = (props) => {
           <div className="overlay" />
           <div className="container h-100 d-flex flex-column justify-content-center position-relative" style={{ zIndex: 2 }}>
             <div className="row zx">
-              <div className="col-md-8 col-md-offset-0 intro-text">
-                <h2 className="text-start h1-text-intro text-capitalize fs-1 text-white mb-3">
-                  {props.data ? props.data.title : "Car Rental Made"}
+              <div className="col-md-8 col-md-offset-0 intro-text" style={{ animation: "fadeUp 1.5s ease" }}>
+                <h2 className="text-start h1-text-intro fs-1 text-white mb-2" style={{ fontFamily: "'Playfair Display', serif" }}>
+                  Car Rental Made <br />
+                  <span style={{ color: "var(--luxury-gold)" }}>{props.carText}</span>
                 </h2>
                 <div className="animation-div">
                   <div
-                    style={{ letterSpacing: "3px" }}
-                    className="text-animate animated-text text-start h1-text-intro text-capitalize text-white mb-3 h2-text-intro"
+                    style={{ letterSpacing: "3px", color: "var(--luxury-gold)", fontFamily: "'Montserrat', sans-serif", fontSize: "1.5rem", fontWeight: "300" }}
+                    className="text-animate animated-text text-start h1-text-intro text-uppercase mb-4"
                   >
-                    {props.carText}
+                    Experience the ultimate luxury.
                   </div>
                 </div>
                 <div className="text-start mt-4">
-                  {typeof props.onBookNowClick === "function" ? (
-                    <button
-                      type="button"
-                      onClick={props.onBookNowClick}
-                      className="btn btn-custom btn-lg page-scroll btn-style501"
-                    >
-                      Book Now
-                    </button>
-                  ) : (
-                    <a
-                      href="https://wa.me/971527074847/?text="
-                      title="Share on WhatsApp"
-                      target="_blank"
-                      rel="noreferrer"
-                      className="btn btn-custom btn-lg page-scroll btn-style501"
-                    >
-                      Book Now
-                    </a>
-                  )}
+                  <a
+                    href="#explorecar"
+                    className="btn btn-luxury btn-lg page-scroll"
+                    style={{ padding: "15px 40px", fontSize: "1.1rem" }}
+                  >
+                    Explore Fleet
+                  </a>
                 </div>
               </div>
               <span className="mouse">

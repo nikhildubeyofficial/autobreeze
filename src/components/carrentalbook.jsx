@@ -21,7 +21,7 @@ const RentalBooking = ({ section, name, data, carData, page, rentalBookData }) =
   const [delivery, setDelivery] = useState(1)
   const [address, setAddress] = useState("");
   const dispatch = useDispatch()
-  const{checkCarAvaibility}=useCarRentalApi()
+  const { checkCarAvaibility } = useCarRentalApi()
   const cars = data;
   function calculateTime(startDate, endDate, timePeriod) {
     if (startDate !== "" && endDate !== "") {
@@ -42,27 +42,32 @@ const RentalBooking = ({ section, name, data, carData, page, rentalBookData }) =
       return timeCount > 1 ? "Weeks" : "Week";
     }
   }, [timePeriod, timeCount]);
-  
+
   const handleSubmit = async (e) => {
     e.preventDefault();
     const state = { car: selectedCar, from: pickupDate, to: dropOffDate, pickuptime: pickupTime, dropOffTime: dropOffTime, delivery: delivery, address: address, timePeriod: timePeriod }
-   //first need to check the car is available for the this period
-   const carCheckObj={car_id:selectedCar,book_date_from:pickupDate,book_date_to:dropOffDate,book_pick_time:pickupTime,book_drop_time:dropOffTime  }
-   try {
-    const res=await checkCarAvaibility(carCheckObj)
-    if(res?.isSucess){
-      if(res?.data?.isAvailable){
+    //first need to check the car is available for the this period
+    const carCheckObj = { car_id: selectedCar, book_date_from: pickupDate, book_date_to: dropOffDate, book_pick_time: pickupTime, book_drop_time: dropOffTime }
+    try {
+      const res = await checkCarAvaibility(carCheckObj)
+      if (res?.isSucess) {
+        if (res?.data?.isAvailable) {
+          dispatch(addBookInfo(state))
+          navigate(`/${selectedCar}`, { state: state });
+        } else {
+          handleNotify(res.message, TOASTER_TYPE.INFO, TOASTER_POSITION.TOP_RIGHT)
+          return;
+        }
+      } else {
         dispatch(addBookInfo(state))
         navigate(`/${selectedCar}`, { state: state });
-      }else{
-        handleNotify(res.message,TOASTER_TYPE.INFO,TOASTER_POSITION.TOP_RIGHT)
-        return;
       }
+    } catch (error) {
+      // fallback if API fails
+      dispatch(addBookInfo(state))
+      navigate(`/${selectedCar}`, { state: state });
     }
-   } catch (error) {
-    
-   }
-    
+
   };
 
   const handleTimePeriod = (time) => {
@@ -279,7 +284,17 @@ const RentalBooking = ({ section, name, data, carData, page, rentalBookData }) =
                 {
                   isRedirectWhatsapp ?
                     <a
-                      href="https://wa.me/971527074847/?text= "
+                      href={`https://wa.me/971527074847/?text=${encodeURIComponent(
+                        `Hello, I would like to book a car rental.\n\n` +
+                        `Car ID/Name: ${carData?.find(c => c.car_id == selectedCar)?.title || selectedCar}\n` +
+                        `Rent From: ${pickupDate}\n` +
+                        `Rent To: ${dropOffDate}\n` +
+                        `Pickup Time: ${pickupTime}\n` +
+                        `Drop Off Time: ${dropOffTime}\n` +
+                        `Delivery Option: ${delivery == 1 ? "Self Pickup" : "Home Delivery"}\n` +
+                        `Address: ${address}\n` +
+                        `Duration: ${timeCount} ${getPeriodName}`
+                      )}`}
                       style={{
                         backgroundColor: "white",
                         color: "black",
@@ -287,7 +302,6 @@ const RentalBooking = ({ section, name, data, carData, page, rentalBookData }) =
                         textDecoration: "none"
                       }}
                       className=" book-btn py-2 px-4 border-0 mt-3 ms-2"
-                      type="submit"
                       aria-label="Book Now"
                     >
                       Book Now

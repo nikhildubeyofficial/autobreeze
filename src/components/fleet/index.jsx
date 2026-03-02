@@ -13,14 +13,14 @@ const OurFleet = ({ data }) => {
     if (Category === "all") {
       setcarData(data);
     } else {
-      setcarData(data.filter((item) => normalized(item.category) === normalized(Category)));
+      setcarData(data.filter((item) => normalized(item.category).includes(normalized(Category))));
     }
   }, [Category, data]);
 
   useEffect(() => {
     setisDiplayMore(false);
   }, [Category]);
-  
+
   const navigate = useNavigate();
 
   const handleCategoryChange = (e) => {
@@ -28,7 +28,7 @@ const OurFleet = ({ data }) => {
   };
 
   const handleClickBook = (id) => {
-    if(id){
+    if (id) {
       navigate(`/${id}`);
     }
   };
@@ -36,38 +36,45 @@ const OurFleet = ({ data }) => {
   return (
     <section className="section-block section-fleet bg-theme-dark fleet-btn" id="explorecar">
       <div className="container container-responsive">
-        <h1 className="text-center py-5 text-theme fw-semibold fleet-section-title">Our Fleet</h1>
-        {/* <div className="brand-type d-flex justify-content-center pb-3"> */}
+        <h1 className="text-center py-5 text-theme fw-semibold fleet-section-title">Explore Cars</h1>
         <div className="brand-type d-flex justify-content-center pb-3">
-          <div className="btn-group d-block fleet" role="group">
+          <div className="d-flex flex-wrap justify-content-center gap-3 fleet" role="group">
             {["all", "suv", "luxury", "sedan"].map((category) => (
-              <React.Fragment key={category}>
-                <input
-                  type="radio"
-                  className="btn-check"
-                  name="btnradio"
-                  id={`btnradio-${category}`}
-                  value={category}
-                  onChange={handleCategoryChange}
-                  autoComplete="off"
-                  checked={Category === category}
-                />
-                <label
-                  className={`btn btn-outline-secondary category-btn ${Category === category ? "active" : ""}`}
-                  htmlFor={`btnradio-${category}`}
-                >
-                  {category.charAt(0).toUpperCase() + category.slice(1)}
-                </label>
-              </React.Fragment>
+              <button
+                key={category}
+                type="button"
+                className={`btn category-btn px-4 py-2 rounded-pill fw-semibold border-0`}
+                onClick={() => setCategory(category)}
+                style={{
+                  transition: 'all 0.3s ease',
+                  transform: Category === category ? 'scale(1.05)' : 'scale(1)',
+                  backdropFilter: 'blur(10px)',
+                  backgroundColor: Category === category ? '#ffffff' : 'rgba(255, 255, 255, 0.1)',
+                  color: Category === category ? '#000000' : '#ffffff',
+                  boxShadow: Category === category ? '0 4px 15px rgba(0,0,0,0.2)' : 'none',
+                  border: '1px solid rgba(255,255,255,0.2)'
+                }}
+                onMouseOver={(e) => {
+                  if (Category !== category) {
+                    e.currentTarget.style.backgroundColor = 'rgba(255, 255, 255, 0.2)';
+                  }
+                }}
+                onMouseOut={(e) => {
+                  if (Category !== category) {
+                    e.currentTarget.style.backgroundColor = 'rgba(255, 255, 255, 0.1)';
+                  }
+                }}
+              >
+                {category.charAt(0).toUpperCase() + category.slice(1)}
+              </button>
             ))}
           </div>
         </div>
-        {/* </div> */}
         <div className="row mt-5">
-         
-          {carData&&carData?.map((car, index) => {
-            const count=isDiplayMore?carData.length:4;
-            if((index<count)){
+
+          {carData && carData?.map((car, index) => {
+            const count = isDiplayMore ? carData.length : 4;
+            if ((index < count)) {
 
               return <CarCardComponent carDetail={car} idindex={index} handleClickBook={handleClickBook} allCars={data} />
             }
@@ -75,7 +82,7 @@ const OurFleet = ({ data }) => {
         </div>
         <div className="row">
           <div className="col-12 text-center mt-4">
-            <button className="btn btn-outline-dark btn-load-more" onClick={()=>setisDiplayMore(!isDiplayMore)}>
+            <button className="btn btn-outline-dark btn-load-more" onClick={() => setisDiplayMore(!isDiplayMore)}>
               {!isDiplayMore ? "Load more" : "Show less"}
             </button>
           </div>

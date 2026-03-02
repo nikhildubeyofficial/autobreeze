@@ -2,7 +2,7 @@ import React, { useEffect, useState } from "react";
 import { Navigation } from "../components/navigation";
 import Footer from "../components/footer";
 import Faq from "../components/faq";
-import {useParams } from "react-router-dom";
+import { useParams } from "react-router-dom";
 import Breadcrumb from "../components/common/bredcum.component";
 import RentalBooking from "../components/carrentalbook";
 import KeyFeatures from "../components/cardetails/keyfeature.component";
@@ -21,7 +21,7 @@ const CardDetail = ({ faq, data }) => {
   const id = +slug;
   const { fetchCarData } = useCarApi();
   const [rentalBookData, setrentalBookData] = useState({})
-  const bookInfo=useSelector(({car})=>car?.bookinfo)
+  const bookInfo = useSelector(({ car }) => car?.bookinfo)
   const [carDetail, setcarDetail] = useState(
     data?.find((item) => item?.id === id)
   );
@@ -29,20 +29,20 @@ const CardDetail = ({ faq, data }) => {
     window.scrollTo(0, 0);
   }, []);
 
-  
+
   useEffect(() => {
     // fetchCarDetail();
     setcarDetail(data?.find((item) => item?.id === id))
     fetchCarDetail()
-  }, [slug,data]);
+  }, [slug, data]);
 
   useEffect(() => {
     setcarData(data)
-    if(bookInfo){
+    if (bookInfo) {
       setrentalBookData(bookInfo)
     }
 
-  }, [data,bookInfo])
+  }, [data, bookInfo])
 
   useEffect(() => {
     if (carDetail?.car_id) {
@@ -59,7 +59,7 @@ const CardDetail = ({ faq, data }) => {
       setKeyFeatureSrc(staticKf || kf);
     }
   }, [carDetail?.car_id, carDetail?.title, id])
-  
+
 
   const [imageName, setimageName] = useState("")
   const [count, setcount] = useState(0)
@@ -71,91 +71,58 @@ const CardDetail = ({ faq, data }) => {
   const [show360, setShow360] = useState(false)
   const [showBookModal, setShowBookModal] = useState(false)
   useEffect(() => {
-    let intervalId = setInterval(()=>{
-      if(count <2){
+    let intervalId = setInterval(() => {
+      if (count < 2) {
 
-        setcount(count+1)
+        setcount(count + 1)
       }
-      else{
+      else {
         setcount(0)
       }
-    },2000)
+    }, 2000)
 
-    if(keyFeatureActiveCount<keyFeatures?.length-1){
-      setkeyFeatureActiveCount(keyFeatureActiveCount+1)
-    }else{
+    if (keyFeatureActiveCount < keyFeatures?.length - 1) {
+      setkeyFeatureActiveCount(keyFeatureActiveCount + 1)
+    } else {
       setkeyFeatureActiveCount(0)
     }
 
 
-    return(() => {
-        clearInterval(intervalId)
+    return (() => {
+      clearInterval(intervalId)
     })
   }, [count])
-  
+
 
   async function fetchCarDetail() {
     try {
       const res = await fetchCarData(id);
       console.log(res)
-      if(res&&res.isSucess){
+      if (res && res.isSucess) {
         setcarDetail(res.data)
         setkeyFeatures(res.data?.key_features?.split("@"))
-      }else{
+      } else {
 
       }
       // console.log(data);
     } catch (error) {
-      const data=carBack.find(car=>car.car_id === id)
+      const data = carBack.find(car => car.car_id === id)
       setcarDetail(data)
       setkeyFeatures(data?.key_features?.split("@"))
     }
   }
-  
+
   return (
     <div>
-      <Navigation page="detail"/>
+      <Navigation page="detail" />
       <Breadcrumb name={carDetail?.title} />
-      <Head/>
+      <Head />
       {/* PDF-style price summary: car name + Daily/Weekly/Monthly + Book Now */}
-      <div className="detail-price-summary bg-theme-dark py-4">
-        <div className="container container-responsive">
+      {/* Luxury Hero Image Area */}
+      <div className="detail-hero-section position-relative" style={{ background: "var(--bg-dark)", padding: "40px 0" }}>
+        <div className="container">
           <div className="row align-items-center">
-            <div className="col-12 col-md-4 mb-3 mb-md-0">
-              <h1 className="text-theme fw-semibold mb-0 text-capitalize detail-price-summary-title">{carDetail?.title}</h1>
-            </div>
-            <div className="col-12 col-md-5 mb-3 mb-md-0">
-              <div className="car-fleet-price-row justify-content-md-start">
-                <div className="car-fleet-price-item" style={{ maxWidth: "120px" }}>
-                  <span className="car-fleet-price-label">Daily</span>
-                  <span className="car-fleet-price-value">{carDetail?.daily_price}</span>
-                </div>
-                <div className="car-fleet-price-item" style={{ maxWidth: "120px" }}>
-                  <span className="car-fleet-price-label">Weekly</span>
-                  <span className="car-fleet-price-value">{carDetail?.weekly_price}</span>
-                </div>
-                <div className="car-fleet-price-item" style={{ maxWidth: "120px" }}>
-                  <span className="car-fleet-price-label">Monthly</span>
-                  <span className="car-fleet-price-value">{carDetail?.monthly_price}</span>
-                </div>
-              </div>
-            </div>
-            <div className="col-12 col-md-3 text-md-end">
-              <button type="button" className="btn btn-book-fleet px-4" onClick={() => setShowBookModal(true)}>Book Now</button>
-            </div>
-          </div>
-        </div>
-      </div>
-      <RentalBooking section="detail" name={carDetail?.title}  carData={carData} page={"detail"} rentalBookData={rentalBookData}/>
-      <BookNowModal show={showBookModal} onClose={() => setShowBookModal(false)} carDetail={carDetail} allCars={data || []} />
-      <div className="detail-section">
-        <div className="container container-responsive py-5">
-          <div className="row">
-            <div className="col-12 col-md-6">
-              <h1 className="text-theme pe-5">{carDetail?.section1_title}</h1>
-              <p className="text-secondary"> {carDetail?.section1_description}</p>
-            </div>
-            <div className="col-12 col-md-6 col-lg-6 ">
+            <div className="col-lg-7 mb-4 mb-lg-0">
               <img
                 src={section1Src || (carDetail?.car_id !== 24 ? `https://car-image-bucket-2024.s3.ap-south-1.amazonaws.com/cardetails/carid${carDetail?.car_id}/section1_images.png` : `./img/cardetails/carid${id}/section1_images.png`)}
                 onError={() => {
@@ -163,43 +130,85 @@ const CardDetail = ({ faq, data }) => {
                   const isLocal = carDetail?.car_id === 24;
                   setSection1Src(isLocal ? `./img/cardetails/carid${id}/section1_images.png` : `${s3Base}/carid${carDetail?.car_id}/section1_images.png`);
                 }}
-                className="w-100"
-                alt={carDetail?.section1_title || "Car"}
-                style={{ objectFit: "contain", maxHeight: 400 }}
+                className="w-100 img-fluid"
+                alt={carDetail?.title || "Car"}
+                style={{ objectFit: "contain", height: "auto", maxHeight: "500px", filter: "drop-shadow(0 20px 30px rgba(0,0,0,0.5))" }}
               />
-              {getSpin360Url(carDetail) && (
-                <>
-                  <button
-                    type="button"
-                    onClick={() => setShow360(true)}
-                    className="d-inline-flex align-items-center gap-2 mt-2 rounded px-4 py-2 border-0"
-                    style={{
-                      fontWeight: 600,
-                      border: "2px solid rgb(0, 181, 255)",
-                      color: "rgb(0, 181, 255)",
-                      backgroundColor: "transparent",
-                      transition: "background-color 0.2s, color 0.2s",
-                      cursor: "pointer",
-                    }}
-                    onMouseOver={(e) => {
-                      e.currentTarget.style.backgroundColor = "rgb(0, 181, 255)";
-                      e.currentTarget.style.color = "#fff";
-                    }}
-                    onMouseOut={(e) => {
-                      e.currentTarget.style.backgroundColor = "transparent";
-                      e.currentTarget.style.color = "rgb(0, 181, 255)";
-                    }}
-                  >
-                    View 360° Spin
-                  </button>
-                  <Spin360Viewer
-                    show={show360}
-                    onClose={() => setShow360(false)}
-                    iframeUrl={getSpin360Url(carDetail)}
-                    carTitle={carDetail?.title}
-                  />
-                </>
-              )}
+            </div>
+            <div className="col-lg-5 text-white">
+              <h1 className="display-4 fw-bold text-capitalize" style={{ fontFamily: "'Playfair Display', serif" }}>{carDetail?.title}</h1>
+              <div className="d-flex align-items-center mb-4 mt-3" style={{ gap: "20px" }}>
+                <div style={{ padding: "10px 20px", border: "1px solid var(--luxury-gold)", borderRadius: "4px" }}>
+                  <div style={{ fontSize: "0.8rem", color: "#aaa", textTransform: "uppercase", letterSpacing: "1px" }}>Daily</div>
+                  <div style={{ color: "var(--luxury-gold)", fontSize: "1.4rem", fontWeight: "600" }}>{carDetail?.daily_price}</div>
+                </div>
+                <div>
+                  <div style={{ fontSize: "0.8rem", color: "#aaa", textTransform: "uppercase" }}>Weekly</div>
+                  <div style={{ fontSize: "1.1rem" }}>{carDetail?.weekly_price}</div>
+                </div>
+                <div>
+                  <div style={{ fontSize: "0.8rem", color: "#aaa", textTransform: "uppercase" }}>Monthly</div>
+                  <div style={{ fontSize: "1.1rem" }}>{carDetail?.monthly_price}</div>
+                </div>
+              </div>
+
+              {/* Specs Grid */}
+              <div className="specs-grid mt-5">
+                <h4 style={{ fontFamily: "'Playfair Display', serif", color: "var(--luxury-gold)", marginBottom: "20px" }}>Specifications</h4>
+                <div className="row gy-3">
+                  <div className="col-6 d-flex align-items-center gap-2">
+                    <i className="bi bi-person-fill text-secondary fs-5"></i>
+                    <div>
+                      <small className="text-light d-block" style={{ fontSize: "0.75rem", textTransform: "uppercase" }}>Seats</small>
+                      <span>{carDetail?.capacity || "4-5"}</span>
+                    </div>
+                  </div>
+                  <div className="col-6 d-flex align-items-center gap-2">
+                    <i className="bi bi-gear-fill text-secondary fs-5"></i>
+                    <div>
+                      <small className="text-light d-block" style={{ fontSize: "0.75rem", textTransform: "uppercase" }}>Transmission</small>
+                      <span>Auto</span>
+                    </div>
+                  </div>
+                  <div className="col-6 d-flex align-items-center gap-2">
+                    <i className="bi bi-speedometer2 text-secondary fs-5"></i>
+                    <div>
+                      <small className="text-light d-block" style={{ fontSize: "0.75rem", textTransform: "uppercase" }}>Engine</small>
+                      <span>V6 / V8</span>
+                    </div>
+                  </div>
+                  <div className="col-6 d-flex align-items-center gap-2">
+                    <i className="bi bi-snow text-secondary fs-5"></i>
+                    <div>
+                      <small className="text-light d-block" style={{ fontSize: "0.75rem", textTransform: "uppercase" }}>Climate</small>
+                      <span>A/C</span>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          {/* Embedded 360 Viewer */}
+          {getSpin360Url(carDetail) && (
+            <div className="row mt-5">
+              <div className="col-12">
+                <h3 style={{ fontFamily: "'Playfair Display', serif", color: "var(--luxury-gold)" }}>360° Exterior View</h3>
+                <Spin360Viewer iframeUrl={getSpin360Url(carDetail)} />
+              </div>
+            </div>
+          )}
+        </div>
+      </div>
+      <div className="detail-section" style={{ background: "var(--bg-gradient)", borderTop: "1px solid rgba(255,255,255,0.05)" }}>
+        <div className="container container-responsive py-5">
+          {/* Booking Section embedded directly */}
+          <div className="row mb-5 pb-5 border-bottom border-secondary">
+            <div className="col-12">
+              <h2 className="text-center mb-4" style={{ fontFamily: "'Playfair Display', serif", color: "white" }}>Secure Your Reservation</h2>
+              <div style={{ background: "rgba(0,0,0,0.4)", borderRadius: "16px", padding: "30px", border: "1px solid rgba(198, 167, 94, 0.2)" }}>
+                <RentalBooking section="detail" name="" carData={carData} page={"detail"} rentalBookData={rentalBookData} />
+              </div>
             </div>
           </div>
           <div className="row pt-5">
@@ -213,12 +222,12 @@ const CardDetail = ({ faq, data }) => {
                 }}
                 className="w-100"
                 alt={carDetail?.section2_title || "Car"}
-                style={{ objectFit: "contain", maxHeight: 400 }}
+                style={{ objectFit: "cover", height: 400, width: "100%", borderRadius: "16px", boxShadow: "0 10px 30px rgba(0,0,0,0.4)" }}
               />
             </div>
             <div className="col-12 col-md-6 pt-5">
               <h1 className="text-theme pe-5">{carDetail?.section2_title}</h1>
-              <p className="text-secondary"> {carDetail?.section2_description}</p>
+              <p className="text-light"> {carDetail?.section2_description}</p>
             </div>
           </div>
         </div>
