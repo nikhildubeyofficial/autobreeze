@@ -1399,11 +1399,56 @@ a:focus-visible {
 .detail-price-summary-title {
   font-size: 1.5rem;
 }
-/* Footer UX: clickable links hover */
+/* Footer: dark background so text is visible (overrides bg-theme-dark when used with text-white) */
+.footer-enhance {
+  background-color: #1a1a1a !important;
+}
+.footer-enhance .text-theme {
+  color: #f0f0f0 !important;
+}
+.footer-enhance a,
+.footer-enhance p {
+  color: #c0c0c0 !important;
+}
 .footer-enhance a[href]:hover,
 .footer-enhance a[style*="grey"]:hover,
 .footer-enhance .text-decoration-none:hover {
-  color: var(--dark-blue) !important;
+  color: #e8f4fc !important;
+}
+/* Detail section (dark bg): ensure headings and body text are light for visibility */
+.detail-section .text-theme,
+.detail-section h1.text-theme {
+  color: #f5f5f5 !important;
+}
+.detail-section p,
+.detail-section .text-light,
+.detail-section .card-text {
+  color: #e0e0e0 !important;
+}
+.detail-section .text-secondary {
+  color: #b0b0b0 !important;
+}
+/* Detail hero labels (Daily/Weekly/Monthly) - clear on dark */
+.detail-hero-label {
+  color: #c5c5c5 !important;
+}
+/* Why Us & FAQ: ensure body text is readable on light cards */
+.card-text,
+.accordion-body {
+  color: #444 !important;
+}
+.accordion-body .text-theme {
+  color: #333 !important;
+}
+/* Fleet: ensure price labels readable on dark cards (index.css may use dark card bg) */
+.car-fleet-price-label {
+  color: #94a3b8 !important;
+}
+.car-fleet-price-value {
+  color: #00b5ff !important;
+}
+.car-fleet-card-title {
+  color: #ffffff !important;
 }
 /* Key features list transition */
 .keyfeature-item-transition {

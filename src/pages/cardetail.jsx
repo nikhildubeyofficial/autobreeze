@@ -139,15 +139,15 @@ const CardDetail = ({ faq, data }) => {
               <h1 className="display-4 fw-bold text-capitalize" style={{ fontFamily: "'Playfair Display', serif" }}>{carDetail?.title}</h1>
               <div className="d-flex align-items-center mb-4 mt-3" style={{ gap: "20px" }}>
                 <div style={{ padding: "10px 20px", border: "1px solid var(--luxury-gold)", borderRadius: "4px" }}>
-                  <div style={{ fontSize: "0.8rem", color: "#aaa", textTransform: "uppercase", letterSpacing: "1px" }}>Daily</div>
+                  <div className="detail-hero-label" style={{ fontSize: "0.8rem", color: "#c5c5c5", textTransform: "uppercase", letterSpacing: "1px" }}>Daily</div>
                   <div style={{ color: "var(--luxury-gold)", fontSize: "1.4rem", fontWeight: "600" }}>{carDetail?.daily_price}</div>
                 </div>
                 <div>
-                  <div style={{ fontSize: "0.8rem", color: "#aaa", textTransform: "uppercase" }}>Weekly</div>
+                  <div className="detail-hero-label" style={{ fontSize: "0.8rem", color: "#c5c5c5", textTransform: "uppercase" }}>Weekly</div>
                   <div style={{ fontSize: "1.1rem" }}>{carDetail?.weekly_price}</div>
                 </div>
                 <div>
-                  <div style={{ fontSize: "0.8rem", color: "#aaa", textTransform: "uppercase" }}>Monthly</div>
+                  <div className="detail-hero-label" style={{ fontSize: "0.8rem", color: "#c5c5c5", textTransform: "uppercase" }}>Monthly</div>
                   <div style={{ fontSize: "1.1rem" }}>{carDetail?.monthly_price}</div>
                 </div>
               </div>
