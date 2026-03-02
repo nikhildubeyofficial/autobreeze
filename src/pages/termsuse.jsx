@@ -5,10 +5,10 @@ import Footer from '../components/footer'
 
 const TermsAndUse = () => {
     return (
-        <>
+        <div className="page-dark">
             <Navigation page="detail"></Navigation>
             <Breadcrumb name="Terms of Use" />
-            <div className="container pb-2">
+            <div className="container container-responsive section-block pb-2">
                 <div className="row">
                     <div className="col-12">
                         <div className="title-text mt-3 mb-3">
@@ -106,7 +106,7 @@ const TermsAndUse = () => {
                 </div>
             </div>
             <Footer />
-        </>
+        </div>
     )
 }
 

@@ -4,10 +4,10 @@ import Footer from '../components/footer'
 
 const AboutUs = () => {
   return (
-    <div>
+    <div className="page-dark">
       <Navigation page="detail" />
-      <div className="footer-section pt-5">
-        <div className="container pt-5 pb-5">
+      <div className="footer-section section-block pt-5">
+        <div className="container container-responsive pt-5 pb-5">
           <div className="row">
             <div className="col-12">
               <div className="about-img w-100 pt-5">

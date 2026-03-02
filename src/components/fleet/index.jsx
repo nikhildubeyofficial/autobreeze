@@ -36,34 +36,15 @@ const OurFleet = ({ data }) => {
   return (
     <section className="section-block section-fleet bg-theme-dark fleet-btn" id="explorecar">
       <div className="container container-responsive">
-        <h1 className="text-center py-5 text-theme fw-semibold fleet-section-title">Explore Cars</h1>
+        <h1 className="text-center py-5 text-theme fw-semibold fleet-section-title">Our Fleet</h1>
         <div className="brand-type d-flex justify-content-center pb-3">
           <div className="d-flex flex-wrap justify-content-center gap-3 fleet" role="group">
             {["all", "suv", "luxury", "sedan"].map((category) => (
               <button
                 key={category}
                 type="button"
-                className={`btn category-btn px-4 py-2 rounded-pill fw-semibold border-0`}
+                className={`btn category-btn px-4 py-2 rounded-pill fw-semibold ${Category === category ? "category-btn-active" : ""}`}
                 onClick={() => setCategory(category)}
-                style={{
-                  transition: 'all 0.3s ease',
-                  transform: Category === category ? 'scale(1.05)' : 'scale(1)',
-                  backdropFilter: 'blur(10px)',
-                  backgroundColor: Category === category ? '#ffffff' : 'rgba(255, 255, 255, 0.1)',
-                  color: Category === category ? '#000000' : '#ffffff',
-                  boxShadow: Category === category ? '0 4px 15px rgba(0,0,0,0.2)' : 'none',
-                  border: '1px solid rgba(255,255,255,0.2)'
-                }}
-                onMouseOver={(e) => {
-                  if (Category !== category) {
-                    e.currentTarget.style.backgroundColor = 'rgba(255, 255, 255, 0.2)';
-                  }
-                }}
-                onMouseOut={(e) => {
-                  if (Category !== category) {
-                    e.currentTarget.style.backgroundColor = 'rgba(255, 255, 255, 0.1)';
-                  }
-                }}
               >
                 {category.charAt(0).toUpperCase() + category.slice(1)}
               </button>

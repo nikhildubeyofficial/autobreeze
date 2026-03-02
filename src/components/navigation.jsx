@@ -250,7 +250,7 @@ export const Navigation = ({ page }) => {
         className={`navbar navbar-expand-lg navbar-dark fixed-top py-4 bg-dark`}
         id="menu"
       >
-        <div className="container-fluid d-flex justify-content-between align-items-center">
+        <div className="container-fluid navbar-inner d-flex justify-content-between align-items-center">
           {/* Left side: Logo */}
           <a
             className="navbar-brand pointer-cursor"

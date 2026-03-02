@@ -206,7 +206,7 @@ const CardDetail = ({ faq, data }) => {
           <div className="row mb-5 pb-5 border-bottom border-secondary">
             <div className="col-12">
               <h2 className="text-center mb-4" style={{ fontFamily: "'Playfair Display', serif", color: "white" }}>Secure Your Reservation</h2>
-              <div style={{ background: "rgba(0,0,0,0.4)", borderRadius: "16px", padding: "30px", border: "1px solid rgba(198, 167, 94, 0.2)" }}>
+              <div className="detail-booking-wrap" style={{ background: "rgba(0,0,0,0.4)", borderRadius: "16px", padding: "24px", border: "1px solid rgba(198, 167, 94, 0.2)" }}>
                 <RentalBooking section="detail" name="" carData={carData} page={"detail"} rentalBookData={rentalBookData} />
               </div>
             </div>

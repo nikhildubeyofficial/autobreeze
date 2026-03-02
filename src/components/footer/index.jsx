@@ -4,8 +4,8 @@ import { Link } from "react-router-dom";
 const Footer = () => {
   const linkStyle = { color: "grey" };
   return (
-    <footer className="footer-enhance bg-theme-dark text-white py-4">
-      <div className="container">
+    <footer className="footer-enhance bg-theme-dark text-white py-4 section-block">
+      <div className="container container-responsive">
         <div className="row">
           <div className="col-md-6">
             <Link to="/" className="d-inline-block">
